@@ -31,7 +31,7 @@ module PastesHelper
   end
 
   def pastebin_language_name(lang)
-    PASTEBIN_LANG_HASH.invert[lang] || lang
+    PASTEBIN_SCANNERS_MAP.invert[lang] || lang
   end
 
   def pastebin_language_choices
