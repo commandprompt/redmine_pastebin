@@ -62,4 +62,10 @@ module PastesHelper
     link_to title, paste_path(paste), :class => "icon icon-del",
       :method => :delete, :confirm => "Are you sure?"
   end
+
+  def manage_paste_links(paste)
+    if User.current.allowed_to?(:manage_pastes, @project)
+      edit_paste_link(paste) + delete_paste_link(paste)
+    end
+  end
 end

@@ -11,7 +11,7 @@
     <code><%=h pastebin_text_preview(paste.text) %></code><br>
     Author: <%= link_to_user paste.author %>
     at <%= format_date(paste.updated_at) %>
-    <%= edit_paste_link(paste) %>
-    <%= delete_paste_link(paste) %>
+
+    <%= manage_paste_links(paste) %>
   </p>
 <% end %>

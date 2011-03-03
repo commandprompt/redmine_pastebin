@@ -41,8 +41,9 @@ Redmine::Plugin.register :redmine_pastebin do
 #  author_url 'http://example.com/about'
 
   project_module :pastes do
-    permission :manage_pastes,
-      :pastes => [:index, :show, :new, :edit, :create, :update, :destroy]
+    permission :view_pastes, :pastes => [:index, :show]
+    permission :manage_pastes, :pastes => [:new, :edit, :create, :update,
+                                           :destroy]
   end
 
   menu :project_menu, :pastes, { :controller => 'pastes', :action => 'index' },

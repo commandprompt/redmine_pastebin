@@ -16,5 +16,4 @@ at <%= format_date(@paste.updated_at) %>
 
 <%= highlighted_content_for_paste(@paste) %>
 
-<%= edit_paste_link @paste, "Edit this paste" %>
-<%= delete_paste_link @paste, "Delete this paste" %>
+<%= manage_paste_links(@paste) %>
