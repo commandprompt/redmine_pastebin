@@ -2,6 +2,11 @@
   <%= stylesheet_link_tag 'scm' %>
 <% end %>
 
+<div class="contextual">
+<%= link_to_all_pastes %>
+<%= link_to_new_paste %>
+</div>
+
 <h2>Paste #<%= @paste.id %></h2>
 
 <p>
@@ -16,4 +21,6 @@ at <%= format_date(@paste.updated_at) %>
 
 <%= highlighted_content_for_paste(@paste) %>
 
+<p>
 <%= manage_paste_links(@paste) %>
+</p>

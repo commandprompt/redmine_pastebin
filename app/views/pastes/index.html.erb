@@ -1,5 +1,5 @@
 <div class="contextual">
-<%= link_to("New paste", new_paste_path(:project_id => @project), :class => 'icon icon-add') if User.current.allowed_to?(:manage_pastes, @project) %>
+  <%= link_to_new_paste %>
 </div>
 
 <h2>Pastes</h2>

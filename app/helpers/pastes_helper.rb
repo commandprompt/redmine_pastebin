@@ -19,20 +19,23 @@
 require 'coderay'
 
 module PastesHelper
-  PASTEBIN_LANG_HASH = {
-    "C" => "C",
-    "C++" => "CPlusPlus",
-    "Ruby" => "Ruby",
-    "Python" => "Python",
-    "JavaScript" => "JavaScript"
+  PASTEBIN_LANGS = ["Plain Text", "C", "C++", "Java", "JavaScript",
+                    "Python", "Ruby", "SQL", "XML", "Diff"]
+  PASTEBIN_SCANNERS_MAP = {
+    "Plain Text" => "Plaintext",
+    "C++" => "CPlusPlus"
   }
 
-  def pastebin_language_choices
-    PASTEBIN_LANG_HASH.map { |k,v| [k, v] }
+  def pastebin_lang_to_scanner(lang)
+    PASTEBIN_SCANNERS_MAP[lang] || lang
   end
 
   def pastebin_language_name(lang)
-    PASTEBIN_LANG_HASH.invert[lang]
+    PASTEBIN_LANG_HASH.invert[lang] || lang
+  end
+
+  def pastebin_language_choices
+    PASTEBIN_LANGS.map { |v| [v, pastebin_lang_to_scanner(v)] }
   end
 
   def highlighted_content_for_paste(paste)
@@ -65,7 +68,19 @@ module PastesHelper
 
   def manage_paste_links(paste)
     if User.current.allowed_to?(:manage_pastes, @project)
-      edit_paste_link(paste) + delete_paste_link(paste)
+      edit_paste_link(paste) + "\n" + delete_paste_link(paste)
+    end
+  end
+
+  def link_to_all_pastes
+    link_to "View all pastes", pastes_path(:project_id => @project),
+      :class => "icon icon-multiple"
+  end
+
+  def link_to_new_paste
+    if User.current.allowed_to?(:manage_pastes, @project)
+      link_to "New paste", new_paste_path(:project_id => @project),
+        :class => "icon icon-add"
     end
   end
 end

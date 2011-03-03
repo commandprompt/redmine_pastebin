@@ -50,7 +50,7 @@ class PastesController < ApplicationController
     if @paste.update_attributes(params[:paste])
       @paste.update_attribute(:author_id, User.current.id)
 
-      flash[:notice] = "Pasted updated successfully"
+      flash[:notice] = "Paste updated successfully"
       redirect_to @paste
     else
       render :edit
