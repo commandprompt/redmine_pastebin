@@ -1,0 +1,20 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'scm' %>
+<% end %>
+
+<h2>Paste #<%= @paste.id %></h2>
+
+<p>
+Link to this paste: <%= link_to paste_url(@paste), @paste %>
+</p>
+
+<p>
+Language: <%= pastebin_language_name(@paste.lang) %><br>
+Author: <%= link_to_user @paste.author %>
+at <%= format_date(@paste.updated_at) %>
+</p>
+
+<%= highlighted_content_for_paste(@paste) %>
+
+<%= edit_paste_link @paste, "Edit this paste" %>
+<%= delete_paste_link @paste, "Delete this paste" %>

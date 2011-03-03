@@ -1,0 +1,15 @@
+<h2>New Paste</h2>
+
+<% form_for @paste, :url => { :action => "create",
+     :project_id => @paste.project.id } do |f| %>
+  <p>
+    <%= f.label :lang, "Langauge" %>
+    <%= f.select :lang, pastebin_language_choices %>
+  </p>
+
+  <%= f.text_area :text, :rows => 25, :cols => 80 %>
+
+  <p>
+    <%= f.submit "Paste!" %>
+  </p>
+<% end %>

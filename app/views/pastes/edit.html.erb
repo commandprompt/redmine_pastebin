@@ -1,0 +1,14 @@
+<h2>Edit Paste #<%= @paste.id %></h2>
+
+<% form_for @paste do |f| %>
+  <p>
+    <%= f.label :lang, "Langauge" %>
+    <%= f.select :lang, pastebin_language_choices %>
+  </p>
+
+  <%= f.text_area :text, :rows => 25, :cols => 80 %>
+
+  <p>
+    <%= f.submit "Update paste!" %>
+  </p>
+<% end %>
