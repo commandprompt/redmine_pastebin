@@ -37,8 +37,10 @@ Redmine::Plugin.register :redmine_pastebin do
   author 'Alex Shulgin <ash@commandprompt.com>'
   description 'A real pastebin plugin for redmine'
   version '0.0.1'
-#  url 'http://example.com/path/to/plugin'
+  url 'https://github.com/a1exsh/redmine_pastebin/'
 #  author_url 'http://example.com/about'
+
+  requires_redmine :version_or_higher => '1.1.0'
 
   project_module :pastes do
     permission :view_pastes,   :pastes => [:index, :show]
