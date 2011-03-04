@@ -1,6 +1,8 @@
 <h2>Edit Paste #<%= @paste.id %></h2>
 
 <% form_for @paste do |f| %>
+  <%= hidden_field_tag "fork" %>
+
   <p>
     <%= f.label :lang, "Language" %>
     <%= f.select :lang, pastebin_language_choices %>
@@ -9,6 +11,9 @@
   <%= f.text_area :text, :rows => 25, :cols => 80 %>
 
   <p>
-    <%= f.submit "Update paste!" %>
+    <%= f.submit "Update paste" %>
+    or
+    <%= submit_tag "Make this a new paste",
+        :onclick => "$('fork').value = 'yes'" %>
   </p>
 <% end %>

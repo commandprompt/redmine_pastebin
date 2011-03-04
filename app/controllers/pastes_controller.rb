@@ -42,18 +42,22 @@ class PastesController < ApplicationController
       flash[:notice] = "Pasted successfully"
       redirect_to @paste
     else
-      render :new
+      render(params[:fork].blank? ? :new : :edit)
     end
   end
 
   def update
-    if @paste.update_attributes(params[:paste])
-      @paste.update_attribute(:author_id, User.current.id)
-
-      flash[:notice] = "Paste updated successfully"
-      redirect_to @paste
+    if params[:fork].present?
+      create
     else
-      render :edit
+      if @paste.update_attributes(params[:paste])
+        @paste.update_attribute(:author_id, User.current.id)
+
+        flash[:notice] = "Paste updated successfully"
+        redirect_to @paste
+      else
+        render :edit
+      end
     end
   end
 

@@ -67,9 +67,10 @@ module PastesHelper
   end
 
   def manage_paste_links(paste)
-    if User.current.allowed_to?(:manage_pastes, @project)
-      edit_paste_link(paste) + "\n" + delete_paste_link(paste)
-    end
+    links = []
+    links << edit_paste_link(paste) if User.current.allowed_to?(:edit_pastes, @project)
+    links << delete_paste_link(paste) if User.current.allowed_to?(:delete_pastes, @project)
+    links.join("\n")
   end
 
   def link_to_all_pastes
@@ -78,7 +79,7 @@ module PastesHelper
   end
 
   def link_to_new_paste
-    if User.current.allowed_to?(:manage_pastes, @project)
+    if User.current.allowed_to?(:add_pastes, @project)
       link_to "New paste", new_paste_path(:project_id => @project),
         :class => "icon icon-add"
     end
