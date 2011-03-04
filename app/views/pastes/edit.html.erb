@@ -1,4 +1,8 @@
-<h2>Edit Paste #<%= @paste.id %></h2>
+<h2>Edit <%= link_to_paste @paste %></h2>
+
+<p>
+<%= render :partial => "authorship", :locals => { :paste => @paste } %>
+</p>
 
 <% form_for @paste do |f| %>
   <%= hidden_field_tag "fork" %>

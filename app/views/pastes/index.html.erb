@@ -6,11 +6,11 @@
 
 <% @pastes.each do |paste| %>
   <p>
-    <%= link_to "Paste ##{paste.id}", paste %> -
+    <%= link_to_paste paste %> -
     <%= pastebin_language_name(paste.lang) %> -
-    <code><%=h pastebin_text_preview(paste.text) %></code><br>
-    Author: <%= link_to_user paste.author %>
-    at <%= format_date(paste.updated_at) %>
+    <code><%=h paste.short_text %></code><br>
+
+    <%= render :partial => "authorship", :locals => { :paste => paste } %>
 
     <%= manage_paste_links(paste) %>
   </p>

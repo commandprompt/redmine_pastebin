@@ -23,4 +23,29 @@ class Paste < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :author, :class_name => 'User'
+
+  acts_as_event :title => Proc.new{ |o| o.title },
+    :url => Proc.new{ |o| { :controller => 'pastes', :action => 'show',
+      :id => o.id } }
+
+  acts_as_activity_provider :find_options => {:include => [:project, :author]},
+    :author_key => :author_id
+
+  def title
+    "Paste ##{id}"
+  end
+
+  def description
+    short_text
+  end
+
+  SHORT_TEXT_LIMIT = 100
+
+  def short_text
+    if text.length < SHORT_TEXT_LIMIT
+      text
+    else
+      text[0..SHORT_TEXT_LIMIT] + "..."
+    end
+  end
 end

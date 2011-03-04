@@ -22,7 +22,7 @@ class PastesController < ApplicationController
   before_filter :find_project, :authorize
 
   def index
-    @pastes = @project.pastes.all(:order => "pastes.created_at DESC")
+    @pastes = @project.pastes.all(:order => "pastes.created_on DESC")
   end
 
   def show
@@ -51,8 +51,6 @@ class PastesController < ApplicationController
       create
     else
       if @paste.update_attributes(params[:paste])
-        @paste.update_attribute(:author_id, User.current.id)
-
         flash[:notice] = "Paste updated successfully"
         redirect_to @paste
       else

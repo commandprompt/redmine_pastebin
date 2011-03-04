@@ -47,30 +47,23 @@ module PastesHelper
     end
   end
 
-  PASTEBIN_TEXT_PREVIEW_LIMIT = 100
-
-  def pastebin_text_preview(text)
-    if text.length < PASTEBIN_TEXT_PREVIEW_LIMIT
-      text
-    else
-      text[0..PASTEBIN_TEXT_PREVIEW_LIMIT] + "..."
-    end
+  def link_to_paste(paste)
+    link_to paste.title, paste
   end
 
   def edit_paste_link(paste, title = "Edit")
-    link_to title, edit_paste_path(paste), :class => "icon icon-edit"
+    link_to_if_authorized title, { :action => "edit", :id => paste },
+      :class => "icon icon-edit"
   end
 
   def delete_paste_link(paste, title = "Delete")
-    link_to title, paste_path(paste), :class => "icon icon-del",
+    link_to_if_authorized title, { :action => "destroy", :id => paste },
+      :class => "icon icon-del",
       :method => :delete, :confirm => "Are you sure?"
   end
 
   def manage_paste_links(paste)
-    links = []
-    links << edit_paste_link(paste) if User.current.allowed_to?(:edit_pastes, @project)
-    links << delete_paste_link(paste) if User.current.allowed_to?(:delete_pastes, @project)
-    links.join("\n")
+    [edit_paste_link(paste), delete_paste_link(paste)].join("\n")
   end
 
   def link_to_all_pastes
@@ -79,9 +72,7 @@ module PastesHelper
   end
 
   def link_to_new_paste
-    if User.current.allowed_to?(:add_pastes, @project)
-      link_to "New paste", new_paste_path(:project_id => @project),
-        :class => "icon icon-add"
-    end
+    link_to_if_authorized "New paste", { :action => "new",
+      :project_id => @project }, :class => "icon icon-add"
   end
 end

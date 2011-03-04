@@ -1,0 +1,5 @@
+<%= authoring paste.created_on, paste.author %>.
+
+<% if paste.updated_on != paste.created_on %>
+  <%= l(:label_updated_time, time_tag(paste.updated_on)) %>.
+<% end %>

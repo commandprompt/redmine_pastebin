@@ -50,3 +50,7 @@ Redmine::Plugin.register :redmine_pastebin do
   menu :project_menu, :pastes, { :controller => 'pastes', :action => 'index' },
     :caption => 'Pastes', :after => 'Wiki', :param => :project_id
 end
+
+Redmine::Activity.map do |activity|
+  activity.register :pastes
+end
