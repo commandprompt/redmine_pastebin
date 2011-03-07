@@ -7,7 +7,7 @@
 <%= link_to_new_paste %>
 </div>
 
-<h2><%= @paste.title %></h2>
+<h2><%= paste_title(@paste) %></h2>
 
 <p>
 Link to this paste: <%= link_to paste_url(@paste), @paste %>

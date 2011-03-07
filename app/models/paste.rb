@@ -19,7 +19,7 @@
 class Paste < ActiveRecord::Base
   unloadable # really?
 
-  attr_accessible :text, :lang
+  attr_accessible :title, :lang, :text
 
   belongs_to :project
   belongs_to :author, :class_name => 'User'
@@ -30,10 +30,6 @@ class Paste < ActiveRecord::Base
 
   acts_as_activity_provider :find_options => {:include => [:project, :author]},
     :author_key => :author_id
-
-  def title
-    "Paste ##{id}"
-  end
 
   def description
     short_text

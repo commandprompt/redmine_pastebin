@@ -7,6 +7,10 @@
 <% form_for @paste, :url => { :action => "create",
      :project_id => @paste.project.id } do |f| %>
   <p>
+    <%= f.label :title, "Title (optional)" %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
     <%= f.label :lang, "Language" %>
     <%= f.select :lang, pastebin_language_choices %>
   </p>
