@@ -22,7 +22,7 @@ class PastesController < ApplicationController
   before_filter :find_project, :authorize
 
   def index
-    @pastes = @project.pastes.all(:order => "pastes.created_on DESC")
+    @pastes = @pastes.all(:order => "pastes.created_on DESC")
   end
 
   def show
@@ -70,9 +70,14 @@ class PastesController < ApplicationController
   def find_project
     if params[:project_id].present?
       @project = Project.find(params[:project_id])
-    else
+    elsif params[:id].present?
       @paste = Paste.find(params[:id])
       @project = @paste.project
+    elsif User.current.admin?
+      @projects = Project.all
+      @pastes = Paste
     end
+
+    @pastes ||= @project.pastes if @project
   end
 end

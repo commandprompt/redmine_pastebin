@@ -7,6 +7,9 @@
 <% @pastes.each do |paste| %>
   <p>
     <%= link_to_paste paste %> -
+    <% unless @project %>
+      <%= link_to_project paste.project %> -
+    <% end %>
     <%= pastebin_language_name(paste.lang) %> -
     <code><%=h paste.short_text %></code><br>
 
