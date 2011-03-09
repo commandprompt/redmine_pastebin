@@ -1,23 +1,11 @@
-<div class="contextual">
-<%= link_to_all_pastes %>
-</div>
-
 <h2>New Paste</h2>
 
-<% form_for @paste, :url => { :action => "create",
+<% labelled_tabular_form_for :paste, @paste, :url => { :action => "create",
      :project_id => @paste.project.id } do |f| %>
-  <p>
-    <%= f.label :title, "Title (optional)" %>
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :lang, "Language" %>
-    <%= f.select :lang, pastebin_language_choices %>
-  </p>
-
-  <%= f.text_area :text, :rows => 25, :cols => 80 %>
-
-  <p>
-    <%= f.submit "Paste!" %>
-  </p>
+<div class="box">
+  <p><%= f.text_field :title %></p>
+  <p><%= f.select :lang, pastebin_language_choices %></p>
+  <p><%= f.text_area :text, :rows => 25, :cols => 80 %></p>
+</div>
+<%= f.submit "Paste!" %>
 <% end %>

@@ -2,12 +2,7 @@
   <%= stylesheet_link_tag 'scm' %>
 <% end %>
 
-<div class="contextual">
-<%= link_to_all_pastes %>
-<%= link_to_new_paste %>
-</div>
-
-<h2><%= paste_title(@paste) %></h2>
+<h2><%=h paste_title(@paste) %></h2>
 
 <p>
 Link to this paste: <%= link_to paste_url(@paste), @paste %>
@@ -23,3 +18,5 @@ Language: <%= pastebin_language_name(@paste.lang) %>
 <p>
 <%= manage_paste_links(@paste) %>
 </p>
+
+<%= render "sidebar" %>

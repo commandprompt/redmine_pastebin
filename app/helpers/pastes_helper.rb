@@ -42,7 +42,7 @@ module PastesHelper
     #Redmine::SyntaxHighlighting.highlight_by_language(paste.text, paste.lang)
 
     # TODO: hard-coding code-ray for :table option
-    content_tag :div, :class => "syntaxhl" do
+    content_tag :div, :class => "syntaxhl box" do
       ::CodeRay.scan(paste.text, paste.lang).html(:line_numbers => :table)
     end
   end
@@ -79,12 +79,12 @@ module PastesHelper
   end
 
   def link_to_all_pastes
-    link_to "View all pastes", pastes_path(:project_id => @project),
+    link_to "View all pastes", { :controller => "pastes", :action => "index", :project_id => @project },
       :class => "icon icon-multiple"
   end
 
   def link_to_new_paste
-    link_to_if_authorized "New paste", { :action => "new",
+    link_to_if_authorized "New paste", { :controller => "pastes", :action => "new",
       :project_id => @project }, :class => "icon icon-add"
   end
 end

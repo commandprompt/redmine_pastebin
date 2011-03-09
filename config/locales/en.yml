@@ -1,3 +1,6 @@
 # English strings go here for Rails i18n
 en:
   label_paste_plural: Pastes
+  field_title: Title (optional)
+  field_lang: Syntax
+  field_text: Text

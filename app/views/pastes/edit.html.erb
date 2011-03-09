@@ -4,24 +4,18 @@
 <%= render :partial => "authorship", :locals => { :paste => @paste } %>
 </p>
 
-<% form_for @paste do |f| %>
+<% labelled_tabular_form_for :paste, @paste,
+   :url => { :action => "update", :id => @paste },
+   :html => { :method => :put } do |f| %>
+<div class="box">
   <%= hidden_field_tag "fork" %>
 
-  <p>
-    <%= f.label :title, "Title (optional)" %>
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :lang, "Language" %>
-    <%= f.select :lang, pastebin_language_choices %>
-  </p>
+  <p><%= f.text_field :title %></p>
+  <p><%= f.select :lang, pastebin_language_choices %></p>
+  <p><%= f.text_area :text, :rows => 25, :cols => 80 %></p>
+</div>
 
-  <%= f.text_area :text, :rows => 25, :cols => 80 %>
-
-  <p>
-    <%= f.submit "Update paste" %>
-    or
-    <%= submit_tag "Make this a new paste",
-        :onclick => "$('fork').value = 'yes'" %>
-  </p>
+<%= f.submit "Update paste" %>
+or
+<%= submit_tag "Make this a new paste", :onclick => "$('fork').value = 'yes'" %>
 <% end %>

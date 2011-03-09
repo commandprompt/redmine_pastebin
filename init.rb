@@ -49,8 +49,10 @@ Redmine::Plugin.register :redmine_pastebin do
     permission :delete_pastes, :pastes => [:destroy]
   end
 
-  menu :project_menu, :pastes, { :controller => 'pastes', :action => 'new' },
-    :caption => 'Pastebin', :after => 'Wiki', :param => :project_id
+  menu :project_menu, :pastes, { :controller => 'pastes', :action => 'index' },
+    :caption => 'Pastes', :after => 'Wiki', :param => :project_id
+  menu :project_menu, :new_paste, { :controller => 'pastes', :action => 'new' },
+    :caption => 'New Paste', :after => 'Pastes', :param => :project_id
 end
 
 Redmine::Activity.map do |activity|
