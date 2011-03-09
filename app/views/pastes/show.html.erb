@@ -1,5 +1,12 @@
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'scm' %>
+<%= stylesheet_link_tag 'scm' %>
+
+<%# This fixes the diff pastes display %>
+<style type="text/css">
+div.paste .syntaxhl div {
+  display: block;
+}
+</style>
 <% end %>
 
 <h2><%=h paste_title(@paste) %></h2>
@@ -13,7 +20,9 @@ Link to this paste: <%= link_to paste_url(@paste), @paste %>
 Language: <%= pastebin_language_name(@paste.lang) %>
 </p>
 
+<div class="paste">
 <%= highlighted_content_for_paste(@paste) %>
+</div>
 
 <p>
 <%= manage_paste_links(@paste) %>
