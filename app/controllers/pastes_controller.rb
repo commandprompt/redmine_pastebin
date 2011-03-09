@@ -19,6 +19,11 @@
 class PastesController < ApplicationController
   unloadable
 
+  # TODO: well, this is pretty much broken, but it's required for the
+  # 'New Paste' link to be highlighted as selected in the project menu
+  # when you're on the new paste page
+  menu_item :new_paste, :only => [:new, :create]
+
   before_filter :find_project, :authorize
 
   def index
