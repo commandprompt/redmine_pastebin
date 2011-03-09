@@ -1,0 +1,6 @@
+# Bulgarian translation by Ivan Cenov <i_cenov@botevgrad.com>
+bg:
+  label_paste_plural: Pastes
+  field_title: Заглавие (незадължително)
+  field_lang: Синтаксис
+  field_text: Текст
