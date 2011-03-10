@@ -1,1 +1,4 @@
-- use html_title
+- act as searchable
+- add index created_on for activity lists
+- pagination
+- add button/link to select the whole paste or copy to clipboard automatically
