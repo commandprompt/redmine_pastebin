@@ -1,14 +1,23 @@
 <% html_title "Pastes" %>
 
+<% content_for :header_tags do %>
+<style type="text/css">
+.paste .timestamp {
+  font-size: 90%;
+}
+</style>
+<% end %>
+
 <h2>Pastes</h2>
 
 <% @pastes.each do |paste| %>
-  <p>
-    <%= link_to_paste paste %> -
+  <p class="paste">
+    <%= paste_timestamp(paste) %>&nbsp;&ndash;
+    <%= link_to_paste paste %>&nbsp;&ndash;
     <% unless @project %>
-      <%= link_to_project paste.project %> -
+      <%= link_to_project paste.project %>&nbsp;&ndash;
     <% end %>
-    <%= pastebin_language_name(paste.lang) %> -
+    <%= pastebin_language_name(paste.lang) %>&nbsp;&ndash;
     <code><%=h paste.short_text %></code><br>
 
     <%= render :partial => "authorship", :locals => { :paste => paste } %>

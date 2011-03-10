@@ -51,12 +51,14 @@ module PastesHelper
     if paste.title.present?
       paste.title
     else
-      "#{paste_timestamp(paste)} - Paste ##{paste.id}"
+      "Paste ##{paste.id}"
     end
   end
 
   def paste_timestamp(paste)
-    paste.created_on.to_s(:db)
+    content_tag :span, :class => "timestamp" do
+      paste.created_on.to_s(:db)
+    end
   end
 
   def link_to_paste(paste)
