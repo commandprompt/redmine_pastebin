@@ -26,7 +26,7 @@ class PastesController < ApplicationController
 
   default_search_scope :pastes
 
-  before_filter :find_project, :authorize
+  before_filter :find_project, :authorize_for_project_or_globally
 
   def index
     @limit = per_page_option
@@ -92,10 +92,13 @@ class PastesController < ApplicationController
       @paste = Paste.find(params[:id])
       @project = @paste.project
     elsif User.current.admin?
-      @projects = Project.all
       @pastes = Paste
     end
 
     @pastes ||= @project.pastes if @project
+  end
+
+  def authorize_for_project_or_globally
+    @project ? authorize : authorize_global
   end
 end
