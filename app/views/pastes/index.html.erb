@@ -12,6 +12,9 @@
 
 <h2><%=h title %></h2>
 
+<% if @pastes.empty? %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% else %>
 <% @pastes.each do |paste| %>
   <p class="paste">
     <%= paste_timestamp(paste) %>&nbsp;&ndash;
@@ -31,6 +34,7 @@
 <p class="pagination">
   <%= pagination_links_full @pastes_pages, @pastes_count %>
 </p>
+<% end %>
 
 <% other_formats_links do |f| %>
   <%= f.link_to 'Atom', :url => { :project_id => @project,
