@@ -40,6 +40,7 @@ class PastesController < ApplicationController
 
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
+      format.atom { render_feed(@pastes, :title => (@project ? @project.name : Setting.app_title) + ": Pastes") }
     end
   end
 

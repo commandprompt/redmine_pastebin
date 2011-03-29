@@ -31,3 +31,8 @@
 <p class="pagination">
   <%= pagination_links_full @pastes_pages, @pastes_count %>
 </p>
+
+<% other_formats_links do |f| %>
+  <%= f.link_to 'Atom', :url => { :project_id => @project,
+        :key => User.current.rss_key } %>
+<% end %>
