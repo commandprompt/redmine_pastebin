@@ -25,3 +25,7 @@
     <%= manage_paste_links(paste) %>
   </p>
 <% end %>
+
+<p class="pagination">
+  <%= pagination_links_full @pastes_pages, @pastes_count %>
+</p>

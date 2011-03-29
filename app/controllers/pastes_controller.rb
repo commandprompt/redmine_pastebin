@@ -29,7 +29,18 @@ class PastesController < ApplicationController
   before_filter :find_project, :authorize
 
   def index
-    @pastes = @pastes.all(:order => "pastes.created_on DESC")
+    @limit = per_page_option
+
+    @pastes_count = @pastes.count
+    @pastes_pages = Paginator.new(self, @pastes_count, @limit, params[:page])
+    @offset ||= @pastes_pages.current.offset
+    @pastes = @pastes.all(:order => "pastes.created_on DESC",
+                          :offset => @offset,
+                          :limit => @limit)
+
+    respond_to do |format|
+      format.html { render :layout => false if request.xhr? }
+    end
   end
 
   def show
