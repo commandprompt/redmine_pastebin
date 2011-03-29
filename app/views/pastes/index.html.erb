@@ -1,4 +1,6 @@
-<% html_title "Pastes" %>
+<% title = @project ? "Pastes" : "All Pastes" %>
+
+<% html_title title %>
 
 <% content_for :header_tags do %>
 <style type="text/css">
@@ -8,7 +10,7 @@
 </style>
 <% end %>
 
-<h2>Pastes</h2>
+<h2><%=h title %></h2>
 
 <% @pastes.each do |paste| %>
   <p class="paste">

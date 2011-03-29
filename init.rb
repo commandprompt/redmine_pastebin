@@ -49,6 +49,10 @@ Redmine::Plugin.register :redmine_pastebin do
     permission :delete_pastes, :pastes => [:destroy]
   end
 
+  menu :application_menu, :pastes,
+    { :controller => 'pastes', :action => 'index' }, :caption => 'All Pastes',
+    :if => Proc.new{ User.current.admin? }
+
   menu :project_menu, :pastes, { :controller => 'pastes', :action => 'index' },
     :caption => 'Pastes', :after => 'Wiki', :param => :project_id
   menu :project_menu, :new_paste, { :controller => 'pastes', :action => 'new' },
