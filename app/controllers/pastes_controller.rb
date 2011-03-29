@@ -24,6 +24,8 @@ class PastesController < ApplicationController
   # when you're on the new paste page
   menu_item :new_paste, :only => [:new, :create]
 
+  default_search_scope :pastes
+
   before_filter :find_project, :authorize
 
   def index

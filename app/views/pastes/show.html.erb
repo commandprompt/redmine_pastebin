@@ -13,9 +13,9 @@ table.CodeRay td.line_numbers {
 </style>
 <% end %>
 
-<% html_title paste_title(@paste) %>
+<% html_title @paste.title %>
 
-<h2><%=h paste_title(@paste) %></h2>
+<h2><%=h @paste.title %></h2>
 
 <p>
 Link to this paste: <%= link_to paste_url(@paste), @paste %>

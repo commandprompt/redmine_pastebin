@@ -47,14 +47,6 @@ module PastesHelper
     end
   end
 
-  def paste_title(paste)
-    if paste.title.present?
-      paste.title
-    else
-      "Paste ##{paste.id}"
-    end
-  end
-
   def paste_timestamp(paste)
     content_tag :span, :class => "timestamp" do
       paste.created_on.to_s(:db)
@@ -62,7 +54,7 @@ module PastesHelper
   end
 
   def link_to_paste(paste)
-    link_to paste_title(paste), paste
+    link_to paste.title, paste
   end
 
   def edit_paste_link(paste, title = "Edit")

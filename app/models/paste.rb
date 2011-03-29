@@ -24,12 +24,20 @@ class Paste < ActiveRecord::Base
   belongs_to :project
   belongs_to :author, :class_name => 'User'
 
+  acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
+    :include => :project
+
   acts_as_event :title => Proc.new{ |o| o.title },
     :url => Proc.new{ |o| { :controller => 'pastes', :action => 'show',
       :id => o.id } }
 
   acts_as_activity_provider :find_options => {:include => [:project, :author]},
     :author_key => :author_id
+
+  def title
+    t = super
+    t.present? ? t : "Paste ##{id}"
+  end
 
   def description
     short_text

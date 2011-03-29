@@ -58,3 +58,7 @@ end
 Redmine::Activity.map do |activity|
   activity.register :pastes
 end
+
+Redmine::Search.map do |search|
+  search.register :pastes
+end
