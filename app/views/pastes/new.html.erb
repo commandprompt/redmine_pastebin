@@ -1,6 +1,6 @@
-<% html_title "New Paste" %>
+<% html_title l(:label_paste_new) %>
 
-<h2>New Paste</h2>
+<h2><%=l :label_paste_new %></h2>
 
 <% labelled_tabular_form_for :paste, @paste, :url => { :action => "create",
      :project_id => @paste.project.id } do |f| %>
@@ -9,5 +9,5 @@
   <p><%= f.select :lang, pastebin_language_choices %></p>
   <p><%= f.text_area :text, :rows => 25, :cols => 80 %></p>
 </div>
-<%= f.submit "Paste!" %>
+<%= f.submit l(:button_paste_submit) %>
 <% end %>

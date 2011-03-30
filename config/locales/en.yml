@@ -1,6 +1,20 @@
 # English strings go here for Rails i18n
 en:
   label_paste_plural: Pastes
+  label_paste_all: All Pastes
+  label_paste_view_all: View all pastes
+  label_paste_link_here: "Link to this paste: %{link}"
+  label_paste_syntax: "Syntax: %{lang}"
+  label_paste_new: New Paste
+  label_paste_edit: Edit %{link}
   field_title: Title (optional)
   field_lang: Syntax
   field_text: Text
+  button_paste_submit: Paste!
+  text_paste_update_or_make_new: %{update} or %{make_new}
+  button_paste_update: Update paste
+  button_paste_make_new: Make this a new paste
+  notice_paste_created: Pasted successfully
+  notice_paste_updated: Paste updated successfully
+  notice_paste_destroyed: Paste removed
+  text_paste_delete_confirmation: Are you sure you want to remove this paste?

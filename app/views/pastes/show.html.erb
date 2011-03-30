@@ -18,12 +18,12 @@ table.CodeRay td.line_numbers {
 <h2><%=h @paste.title %></h2>
 
 <p>
-Link to this paste: <%= link_to paste_url(@paste), @paste %>
+<%=l :label_paste_link_here, :link => link_to(paste_url(@paste), @paste) %>
 </p>
 
 <p>
 <%= render :partial => "authorship", :locals => { :paste => @paste } %><br>
-Language: <%= pastebin_language_name(@paste.lang) %>
+<%=l :label_paste_syntax, :lang => pastebin_language_name(@paste.lang) %>
 </p>
 
 <div class="paste">

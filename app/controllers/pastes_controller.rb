@@ -41,7 +41,7 @@ class PastesController < ApplicationController
 
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
-      format.atom { render_feed(@pastes, :title => (@project ? @project.name : Setting.app_title) + ": Pastes") }
+      format.atom { render_feed(@pastes, :title => (@project ? @project.name : Setting.app_title) + ": " + l(:label_paste_plural)) }
     end
   end
 
@@ -59,7 +59,7 @@ class PastesController < ApplicationController
     @paste = @project.pastes.build(params[:paste])
     @paste.author = User.current
     if @paste.save
-      flash[:notice] = "Pasted successfully"
+      flash[:notice] = l(:notice_paste_created)
       redirect_to @paste
     else
       render(params[:fork].blank? ? :new : :edit)
@@ -71,7 +71,7 @@ class PastesController < ApplicationController
       create
     else
       if @paste.update_attributes(params[:paste])
-        flash[:notice] = "Paste updated successfully"
+        flash[:notice] = l(:notice_paste_updated)
         redirect_to @paste
       else
         render :edit
@@ -81,7 +81,7 @@ class PastesController < ApplicationController
 
   def destroy
     @paste.destroy
-    flash[:notice] = "Paste destroyed"
+    flash[:notice] = l(:notice_paste_destroyed)
     redirect_to pastes_path(:project_id => @project.id)
   end
 

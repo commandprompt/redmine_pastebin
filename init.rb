@@ -50,13 +50,17 @@ Redmine::Plugin.register :redmine_pastebin do
   end
 
   menu :application_menu, :pastes,
-    { :controller => 'pastes', :action => 'index' }, :caption => 'All Pastes',
+    { :controller => 'pastes', :action => 'index' },
+    :caption => :label_paste_all,
     :if => Proc.new{ User.current.admin? }
 
   menu :project_menu, :pastes, { :controller => 'pastes', :action => 'index' },
-    :caption => 'Pastes', :after => 'Wiki', :param => :project_id
+    :caption => :label_paste_plural, :after => :label_wiki,
+    :param => :project_id
+
   menu :project_menu, :new_paste, { :controller => 'pastes', :action => 'new' },
-    :caption => 'New Paste', :after => 'Pastes', :param => :project_id
+    :caption => :label_paste_new, :after => :label_paste_plural,
+    :param => :project_id
 end
 
 Redmine::Activity.map do |activity|

@@ -57,15 +57,15 @@ module PastesHelper
     link_to paste.title, paste
   end
 
-  def edit_paste_link(paste, title = "Edit")
+  def edit_paste_link(paste, title = l(:button_edit))
     link_to_if_authorized title, { :action => "edit", :id => paste },
       :class => "icon icon-edit"
   end
 
-  def delete_paste_link(paste, title = "Delete")
+  def delete_paste_link(paste, title = l(:button_delete))
     link_to_if_authorized title, { :action => "destroy", :id => paste },
       :class => "icon icon-del",
-      :method => :delete, :confirm => "Are you sure?"
+      :method => :delete, :confirm => l(:text_paste_delete_confirmation)
   end
 
   def manage_paste_links(paste)
@@ -73,12 +73,8 @@ module PastesHelper
   end
 
   def link_to_all_pastes
-    link_to "View all pastes", { :controller => "pastes", :action => "index", :project_id => @project },
+    link_to l(:label_paste_view_all),
+      { :controller => "pastes", :action => "index", :project_id => @project },
       :class => "icon icon-multiple"
-  end
-
-  def link_to_new_paste
-    link_to_if_authorized "New paste", { :controller => "pastes", :action => "new",
-      :project_id => @project }, :class => "icon icon-add"
   end
 end

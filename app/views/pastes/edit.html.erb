@@ -1,6 +1,6 @@
 <% html_title @paste.title %>
 
-<h2>Edit <%= link_to_paste @paste %></h2>
+<h2><%=l :label_paste_edit, :link => link_to_paste(@paste) %></h2>
 
 <p>
 <%= render :partial => "authorship", :locals => { :paste => @paste } %>
@@ -17,7 +17,8 @@
   <p><%= f.text_area :text, :rows => 25, :cols => 80 %></p>
 </div>
 
-<%= f.submit "Update paste" %>
-or
-<%= submit_tag "Make this a new paste", :onclick => "$('fork').value = 'yes'" %>
+<%=l :text_paste_update_or_make_new,
+   :update => f.submit(l(:button_paste_update)),
+   :make_new => submit_tag(l(:button_paste_make_new),
+                           :onclick => "$('fork').value = 'yes'") %>
 <% end %>
