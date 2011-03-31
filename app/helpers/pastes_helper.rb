@@ -20,7 +20,7 @@ require 'coderay'
 
 module PastesHelper
   PASTEBIN_LANGS = ["Plain Text", "C", "C++", "Java", "JavaScript",
-                    "Python", "Ruby", "SQL", "XML", "Diff"]
+                    "Python", "Ruby", "PHP", "SQL", "XML", "Diff"]
   PASTEBIN_SCANNERS_MAP = {
     "Plain Text" => "Plaintext",
     "C++" => "CPlusPlus"
