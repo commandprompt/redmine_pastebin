@@ -21,6 +21,10 @@ require 'coderay'
 module PastesHelper
   PASTEBIN_LANGS = ["Plain Text", "C", "C++", "Java", "JavaScript",
                     "Python", "Ruby", "PHP", "SQL", "XML", "Diff"]
+
+  # This maps pretty language/syntax name to identifier that CodeRay
+  # can understand.  If a language is not mapped, unchanged name is
+  # assumed for the scanner.
   PASTEBIN_SCANNERS_MAP = {
     "Plain Text" => "Plaintext",
     "C++" => "CPlusPlus"
