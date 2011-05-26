@@ -1,6 +1,20 @@
 # Bulgarian translation by Ivan Cenov <i_cenov@botevgrad.com>
 bg:
   label_paste_plural: Pastes
+  label_paste_all: Всички pastes
+  label_paste_view_all: Списък на всички pastes
+  label_paste_link_here: "Връзка към тази paste: %{link}"
+  label_paste_syntax: "Синтаксис: %{lang}"
+  label_paste_new: Нова paste
+  label_paste_edit: Редактиране %{link}
   field_title: Заглавие (незадължително)
   field_lang: Синтаксис
   field_text: Текст
+  button_paste_submit: Запис
+  text_paste_update_or_make_new: %{update} или %{make_new}
+  button_paste_update: Обновяване
+  button_paste_make_new: Запис като нова paste
+  notice_paste_created: Успешен запис
+  notice_paste_updated: Paste е обновена успешно
+  notice_paste_destroyed: Paste е премахната
+  text_paste_delete_confirmation: Сигурен/на ли сте, че искате да премахнете тази paste?
