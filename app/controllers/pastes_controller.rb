@@ -95,6 +95,7 @@ class PastesController < ApplicationController
       @project = @paste.project
     elsif User.current.admin?
       @pastes = Paste
+    else render_403
     end
 
     @pastes = @project.pastes if @project

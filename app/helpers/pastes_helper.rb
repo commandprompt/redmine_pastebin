@@ -81,4 +81,10 @@ module PastesHelper
       { :controller => "pastes", :action => "index", :project_id => @project },
       :class => "icon icon-multiple"
   end
+
+  def link_to_new_paste
+    link_to_if_authorized "New paste", { :action => "new",
+      :project_id => @project }, :class => "icon icon-add"
+  end
+
 end
