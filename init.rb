@@ -57,10 +57,10 @@ Redmine::Plugin.register :redmine_pastebin do
   menu :project_menu, :pastes, { :controller => 'pastes', :action => 'index' },
     :caption => :label_paste_plural, :after => :label_wiki,
     :param => :project_id
-
-  menu :project_menu, :new_paste, { :controller => 'pastes', :action => 'new' },
-    :caption => :label_paste_new, :after => :label_paste_plural,
-    :param => :project_id
+# removed new pasted link from project tab to link in pastes tab
+#  menu :project_menu, :new_paste, { :controller => 'pastes', :action => 'new' },
+#    :caption => :label_paste_new, :after => :label_paste_plural,
+#    :param => :project_id
 end
 
 Redmine::Activity.map do |activity|
