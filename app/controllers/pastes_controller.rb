@@ -88,8 +88,9 @@ class PastesController < ApplicationController
     elsif params[:id].present?
       @paste = Paste.find(params[:id])
       @project = @paste.project
-    elsif User.current.admin?
+    else
       @pastes = Paste
+      @projects = Project.active
     end
 
     @pastes = @project.pastes if @project
