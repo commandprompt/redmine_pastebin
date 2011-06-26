@@ -1,0 +1,20 @@
+# Traduction par Adrien Jeser <hela@love-hela.tk>
+fr:
+  label_paste_plural: Pastes
+  label_paste_all: Toutes les Pastes
+  label_paste_view_all: Voir toutes les pastes
+  label_paste_link_here: "Lien vers vette paste: %{link}"
+  label_paste_syntax: "Syntaxe: %{lang}"
+  label_paste_new: Nouvelle Paste
+  label_paste_edit: Edition %{link}
+  field_title: Title (option)
+  field_lang: Syntaxe
+  field_text: Texte
+  button_paste_submit: Paste!
+  text_paste_update_or_make_new: %{update} ou %{make_new}
+  button_paste_update: Mise à jour de la paste
+  button_paste_make_new: Marquer cette paste comme non lu
+  notice_paste_created: Pasted réuissi
+  notice_paste_updated: Paste mise à jour réussi
+  notice_paste_destroyed: Paste supprimer
+  text_paste_delete_confirmation: Êtes vous sur de vouloir supprimer cette paste ?
