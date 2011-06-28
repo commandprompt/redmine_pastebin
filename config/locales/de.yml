@@ -1,0 +1,20 @@
+# German strings go here for Rails i18n
+de:
+  label_paste_plural: Snippets
+  label_paste_all: Snippets
+  label_paste_view_all: alle Snippets anzeigen
+  label_paste_link_here: "Link zu diesem Snippet : %{link}"
+  label_paste_syntax: "Syntax: %{lang}"
+  label_paste_new: Snippet erstellen
+  label_paste_edit: bearbeiten %{link}
+  field_title: Überschrift (optional)
+  field_lang: Syntax
+  field_text: Text
+  button_paste_submit: Einfügen
+  text_paste_update_or_make_new: %{update} or %{make_new}
+  button_paste_update: Textschnipsel ändern
+  button_paste_make_new: als neuen Snippet erstellen
+  notice_paste_created: erfolgreich veröffentlicht
+  notice_paste_updated: Änderungen veröffentlicht
+  notice_paste_destroyed: Snippet gelöscht
+  text_paste_delete_confirmation: Wollen Sie den Snippet löschen?
