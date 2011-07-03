@@ -1,4 +1,4 @@
-- act as searchable
 - add index created_on for activity lists
-- pagination
 - add button/link to select the whole paste or copy to clipboard automatically
+- it should be possible to upload a file from local disk instead of
+  pasting text to the form
