@@ -1,7 +1,6 @@
 # Italian translation by https://github.com/cipparello
 it:
   label_paste_plural: Paste
-  label_paste_all: Tutti i Paste
   label_paste_view_all: Visualizza tutti i paste
   label_paste_link_here: "Collegamento a questo paste: %{link}"
   label_paste_syntax: "Sintassi: %{lang}"

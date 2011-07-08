@@ -19,6 +19,8 @@
 require 'redmine'
 require 'dispatcher'
 
+require_dependency 'redmine_pastebin/view_hooks'
+
 Dispatcher.to_prepare :redmine_model_dependencies do
   require_dependency 'project'
   require_dependency 'user'
@@ -48,11 +50,6 @@ Redmine::Plugin.register :redmine_pastebin do
     permission :edit_pastes,   :pastes => [:edit, :update]
     permission :delete_pastes, :pastes => [:destroy]
   end
-
-  menu :application_menu, :pastes,
-    { :controller => 'pastes', :action => 'index' },
-    :caption => :label_paste_all,
-    :if => Proc.new{ User.current.admin? }
 
   menu :project_menu, :pastes, { :controller => 'pastes', :action => 'index' },
     :caption => :label_paste_plural, :after => :label_wiki,

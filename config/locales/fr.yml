@@ -1,7 +1,6 @@
 # Traduction par Adrien Jeser <hela@love-hela.tk>
 fr:
   label_paste_plural: Pastes
-  label_paste_all: Toutes les Pastes
   label_paste_view_all: Voir toutes les pastes
   label_paste_link_here: "Lien vers vette paste: %{link}"
   label_paste_syntax: "Syntaxe: %{lang}"

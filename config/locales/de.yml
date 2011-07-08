@@ -1,7 +1,6 @@
 # German strings go here for Rails i18n
 de:
   label_paste_plural: Snippets
-  label_paste_all: Snippets
   label_paste_view_all: alle Snippets anzeigen
   label_paste_link_here: "Link zu diesem Snippet : %{link}"
   label_paste_syntax: "Syntax: %{lang}"

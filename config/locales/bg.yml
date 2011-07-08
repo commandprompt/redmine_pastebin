@@ -1,7 +1,6 @@
 # Bulgarian translation by Ivan Cenov <i_cenov@botevgrad.com>
 bg:
   label_paste_plural: Pastes
-  label_paste_all: Всички pastes
   label_paste_view_all: Списък на всички pastes
   label_paste_link_here: "Връзка към тази paste: %{link}"
   label_paste_syntax: "Синтаксис: %{lang}"
