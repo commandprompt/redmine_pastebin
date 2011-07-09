@@ -24,6 +24,10 @@ class Paste < ActiveRecord::Base
   belongs_to :project
   belongs_to :author, :class_name => 'User'
 
+  named_scope :for_project, lambda { |project|
+    { :conditions => { :project_id => project } }
+  }
+
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project
 

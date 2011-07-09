@@ -21,7 +21,8 @@ class PastesController < ApplicationController
 
   default_search_scope :pastes
 
-  before_filter :find_project, :authorize_for_project_or_globally
+  before_filter :find_project, :authorize
+
   accept_key_auth :index
 
   def index
@@ -30,7 +31,7 @@ class PastesController < ApplicationController
     @pastes_count = @pastes.count
     @pastes_pages = Paginator.new(self, @pastes_count, @limit, params[:page])
     @offset ||= @pastes_pages.current.offset
-    @pastes = @pastes.all(:order => "pastes.created_on DESC",
+    @pastes = @pastes.all(:order => "#{Paste.table_name}.created_on DESC",
                           :offset => @offset,
                           :limit => @limit)
 
@@ -89,14 +90,10 @@ class PastesController < ApplicationController
       @paste = Paste.find(params[:id])
       @project = @paste.project
     else
-      @pastes = Paste
-      @projects = Project.active
+      @projects = Project.visible.has_module(:pastes)
     end
-
-    @pastes = @project.pastes if @project
-  end
-
-  def authorize_for_project_or_globally
-    @project ? authorize : authorize_global
+    @pastes = Paste.for_project(@project || @projects)
+  rescue ActiveRecord::RecordNotFound
+    render_404
   end
 end
