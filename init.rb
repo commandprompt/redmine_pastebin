@@ -21,7 +21,7 @@ require 'dispatcher'
 
 require_dependency 'redmine_pastebin/view_hooks'
 
-Dispatcher.to_prepare :redmine_model_dependencies do
+Dispatcher.to_prepare :redmine_pastebin do
   require_dependency 'project'
   require_dependency 'user'
 
