@@ -12,9 +12,11 @@
 <div class="box">
   <%= hidden_field_tag "fork" %>
 
-  <p><%= f.text_field :title %></p>
-  <p><%= f.select :lang, pastebin_language_choices %></p>
-  <p><%= f.text_area :text, :rows => 25, :cols => 80 %></p>
+  <p><%= f.text_field :title, :label => :field_paste_title %></p>
+  <p><%= f.select :lang, pastebin_language_choices,
+         :label => :field_paste_lang %></p>
+  <p><%= f.text_area :text, :label => :field_paste_text,
+         :rows => 25, :cols => 80 %></p>
 </div>
 
 <%=l :text_paste_update_or_make_new,
