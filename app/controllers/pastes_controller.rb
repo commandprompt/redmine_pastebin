@@ -86,13 +86,17 @@ class PastesController < ApplicationController
   def find_project
     if params[:project_id].present?
       @project = Project.find(params[:project_id])
-    elsif params[:id].present?
-      @paste = Paste.find(params[:id])
-      @project = @paste.project
+      @pastes = @project.pastes
+    else
+      @pastes = Paste
+    end
+    if params[:id].present?
+      @paste = @pastes.find(params[:id])
+      @project ||= @paste.project
     else
       @projects = Project.visible.has_module(:pastes)
     end
-    @pastes = Paste.for_project(@project || @projects)
+    @pastes ||= Paste.for_project(@project || @projects)
   rescue ActiveRecord::RecordNotFound
     render_404
   end
