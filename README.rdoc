@@ -1,3 +1,10 @@
 = redmine_pastebin
 
 A real pastebin plugin for Redmine.
+
+= Installation Notes
+
+$ script/plugin install ...
+$ rake db:migrate_plugins
+
+Don't forget to setup roles permissions in the Pastes section.
