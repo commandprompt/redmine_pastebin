@@ -6,9 +6,9 @@ bg:
   label_paste_syntax: "Синтаксис: %{lang}"
   label_paste_new: Нова paste
   label_paste_edit: Редактиране %{link}
-  field_title: Заглавие (незадължително)
-  field_lang: Синтаксис
-  field_text: Текст
+  field_paste_title: Заглавие (незадължително)
+  field_paste_lang: Синтаксис
+  field_paste_text: Текст
   button_paste_submit: Запис
   text_paste_update_or_make_new: %{update} или %{make_new}
   button_paste_update: Обновяване
