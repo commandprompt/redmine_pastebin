@@ -30,6 +30,22 @@ module PastesHelper
     "C++" => "CPlusPlus"
   }
 
+  PASTEBIN_MIME_TYPES_MAP = {
+    "Plain Text" => "text/plain",
+    "C" => "text/x-c",
+    "Ruby" => "text/x-ruby",
+    "PHP" => "text/x-php",
+    "XML" => "application/xml"
+  }
+
+  PASTEBIN_FILE_SUFFIX_MAP = {
+    "Plain Text" => "txt",
+    "C++" => "cpp",
+    "JavaScript" => "js",
+    "Python" => "py",
+    "Ruby" => "rb",
+  }
+  
   def pastebin_lang_to_scanner(lang)
     PASTEBIN_SCANNERS_MAP[lang] || lang
   end
@@ -40,6 +56,18 @@ module PastesHelper
 
   def pastebin_language_choices
     PASTEBIN_LANGS.map { |v| [v, pastebin_lang_to_scanner(v)] }
+  end
+
+  def pastebin_filename_suffix(paste)
+    PASTEBIN_FILE_SUFFIX_MAP[paste.lang] || paste.lang.downcase
+  end
+
+  def pastebin_filename(paste)
+    paste.title + "." + pastebin_filename_suffix(paste)
+  end
+
+  def pastebin_mime_type(paste)
+    PASTEBIN_MIME_TYPES_MAP[paste.lang] || "application/octet-stream"
   end
 
   def highlighted_content_for_paste(paste)

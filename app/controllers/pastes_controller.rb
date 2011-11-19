@@ -19,6 +19,8 @@
 class PastesController < ApplicationController
   unloadable
 
+  include PastesHelper
+
   default_search_scope :pastes
 
   before_filter :find_project, :authorize
@@ -45,7 +47,8 @@ class PastesController < ApplicationController
   end
 
   def download
-    send_data @paste.text, :filename => @paste.title, :type => 'text/plain',
+    send_data @paste.text, :filename => pastebin_filename(@paste),
+      :type => pastebin_mime_type(@paste),
       :disposition => 'attachment'
   end
 
