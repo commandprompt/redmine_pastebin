@@ -44,6 +44,11 @@ class PastesController < ApplicationController
   def show
   end
 
+  def download
+    send_data @paste.text, :filename => @paste.title, :type => 'text/plain',
+      :disposition => 'attachment'
+  end
+
   def new
     @paste = @project.pastes.build
   end

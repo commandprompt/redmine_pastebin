@@ -72,8 +72,15 @@ module PastesHelper
       :method => :delete, :confirm => l(:text_paste_delete_confirmation)
   end
 
+  def download_paste_link(paste, title = l(:button_download))
+    link_to title, { :action => "download", :id => paste },
+      :class => "icon icon-save"
+  end
+
   def manage_paste_links(paste)
-    [edit_paste_link(paste), delete_paste_link(paste)].join("\n")
+    [edit_paste_link(paste),
+     delete_paste_link(paste),
+     download_paste_link(paste)].join("\n")
   end
 
   def link_to_all_pastes

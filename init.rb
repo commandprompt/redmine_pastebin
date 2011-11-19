@@ -45,7 +45,7 @@ Redmine::Plugin.register :redmine_pastebin do
   requires_redmine :version_or_higher => '1.1.0'
 
   project_module :pastes do
-    permission :view_pastes,   :pastes => [:index, :show]
+    permission :view_pastes,   :pastes => [:index, :show, :download]
     permission :add_pastes,    :pastes => [:new, :create]
     permission :edit_pastes,   :pastes => [:edit, :update]
     permission :delete_pastes, :pastes => [:destroy]
