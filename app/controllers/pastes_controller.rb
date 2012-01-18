@@ -26,6 +26,7 @@ class PastesController < ApplicationController
   before_filter :find_project, :authorize
 
   accept_key_auth :index
+  accept_api_auth :index, :show, :download, :create, :update, :destroy
 
   def index
     @limit = per_page_option
@@ -40,6 +41,7 @@ class PastesController < ApplicationController
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
       format.atom { render_feed(@pastes, :title => (@project ? @project.name : Setting.app_title) + ": " + l(:label_paste_plural)) }
+      format.api
     end
   end
 
@@ -63,10 +65,18 @@ class PastesController < ApplicationController
     @paste = @project.pastes.build(params[:paste])
     @paste.author = User.current
     if @paste.save
-      flash[:notice] = l(:notice_paste_created)
-      redirect_to @paste
+      respond_to do |format|
+        format.html {
+          flash[:notice] = l(:notice_paste_created)
+          redirect_to @paste
+        }
+        format.api  { render :action => 'show', :status => :created, :location => paste_url(@paste) }
+      end
     else
-      render(params[:fork].blank? ? :new : :edit)
+      respond_to do |format|
+        format.html { render(params[:fork].blank? ? :new : :edit) }
+        format.api { render_validation_errors(@paste) }
+      end
     end
   end
 
@@ -76,9 +86,16 @@ class PastesController < ApplicationController
     else
       if @paste.update_attributes(params[:paste])
         flash[:notice] = l(:notice_paste_updated)
-        redirect_to @paste
+
+        respond_to do |format|
+          format.html { redirect_to @paste }
+          format.api { head :ok }
+        end
       else
-        render :edit
+        respond_to do |format|
+          format.html { render :edit }
+          format.api { render_validation_errors(@paste) }
+        end
       end
     end
   end
@@ -86,7 +103,11 @@ class PastesController < ApplicationController
   def destroy
     @paste.destroy
     flash[:notice] = l(:notice_paste_destroyed)
-    redirect_to pastes_path(:project_id => @project.id)
+
+    respond_to do |format|
+      format.html { redirect_to pastes_path(:project_id => @project.id) }
+      fomat.api { head :ok }
+    end
   end
 
   private
