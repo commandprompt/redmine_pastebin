@@ -106,7 +106,7 @@ class PastesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to pastes_path(:project_id => @project.id) }
-      fomat.api { head :ok }
+      format.api { head :ok }
     end
   end
 
