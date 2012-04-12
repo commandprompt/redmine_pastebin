@@ -1,0 +1,17 @@
+api.array :pastes, api_meta(:total_count => @pastes_count, :offset => @offset, :limit => @limit) do
+  @pastes.each do |paste|
+    api.paste do
+      api.id paste.id
+      api.author_id paste.author_id
+      api.project_id paste.project_id
+      
+      api.lang paste.lang
+      api.title paste.title
+      api.text paste.text
+
+      api.created_on paste.created_on
+      api.updated_on paste.updated_on
+    end
+  end
+end
+
