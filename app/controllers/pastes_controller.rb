@@ -25,7 +25,7 @@ class PastesController < ApplicationController
 
   before_filter :find_project, :authorize
 
-  accept_key_auth :index
+  accept_rss_auth :index
 
   def index
     @limit = per_page_option
