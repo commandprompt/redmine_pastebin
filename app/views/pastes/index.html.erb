@@ -41,4 +41,4 @@
         :key => User.current.rss_key } %>
 <% end %>
 
-<%= render "sidebar" %>
+<%= render "sidebar" if @project %>

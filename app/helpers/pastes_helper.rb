@@ -85,23 +85,28 @@ module PastesHelper
     end
   end
 
+  def url_to_paste(action, paste = nil)
+    { :controller => "pastes", :action => action,
+      :id => paste, :project_id => @project }
+  end
+
   def link_to_paste(paste)
     link_to paste.title, paste
   end
 
   def edit_paste_link(paste, title = l(:button_edit))
-    link_to_if_authorized title, { :action => "edit", :id => paste },
+    link_to_if_authorized title, url_to_paste("edit", paste),
       :class => "icon icon-edit"
   end
 
   def delete_paste_link(paste, title = l(:button_delete))
-    link_to_if_authorized title, { :action => "destroy", :id => paste },
+    link_to_if_authorized title, url_to_paste("destroy", paste),
       :class => "icon icon-del",
       :method => :delete, :confirm => l(:text_paste_delete_confirmation)
   end
 
   def download_paste_link(paste, title = l(:button_download))
-    link_to title, { :action => "download", :id => paste },
+    link_to title, url_to_paste("download", paste),
       :class => "icon icon-save"
   end
 
@@ -112,14 +117,12 @@ module PastesHelper
   end
 
   def link_to_all_pastes
-    link_to l(:label_paste_view_all),
-      { :controller => "pastes", :action => "index", :project_id => @project },
+    link_to l(:label_paste_view_all), url_to_paste("index"),
       :class => "icon icon-multiple"
   end
 
   def link_to_new_paste
-    link_to_if_authorized l(:label_paste_new),
-      { :controller => "pastes", :action => "new", :project_id => @project },
+    link_to_if_authorized l(:label_paste_new), url_to_paste("new"),
       :class => "icon icon-add"
   end
 end

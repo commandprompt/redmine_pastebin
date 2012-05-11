@@ -23,7 +23,7 @@ class PastesController < ApplicationController
 
   default_search_scope :pastes
 
-  before_filter :find_project, :authorize
+  before_filter :find_paste_and_project, :authorize
 
   accept_rss_auth :index
 
@@ -86,12 +86,12 @@ class PastesController < ApplicationController
   def destroy
     @paste.destroy
     flash[:notice] = l(:notice_paste_destroyed)
-    redirect_to pastes_path(:project_id => @project.id)
+    redirect_to :action => "index", :project_id => params[:project_id]
   end
 
   private
 
-  def find_project
+  def find_paste_and_project
     if params[:project_id].present?
       @project = Project.find(params[:project_id])
       @pastes = @project.pastes
@@ -101,10 +101,7 @@ class PastesController < ApplicationController
     if params[:id].present?
       @paste = @pastes.find(params[:id])
       @project ||= @paste.project
-    else
-      @projects = Project.visible.has_module(:pastes)
     end
-    @pastes ||= Paste.for_project(@project || @projects)
   rescue ActiveRecord::RecordNotFound
     render_404
   end
