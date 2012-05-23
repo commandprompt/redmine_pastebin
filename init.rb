@@ -16,22 +16,20 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+YAML::ENGINE.yamler = 'syck'
 require 'redmine'
-require 'dispatcher'
 
 require_dependency 'redmine_pastebin/view_hooks'
 
-Dispatcher.to_prepare :redmine_pastebin do
-  require_dependency 'project'
-  require_dependency 'user'
+require_dependency 'project'
+require_dependency 'user'
 
-  unless Project.included_modules.include? RedminePastebin::ProjectPastesPatch
-    Project.send(:include, RedminePastebin::ProjectPastesPatch)
-  end
+unless Project.included_modules.include? RedminePastebin::ProjectPastesPatch
+  Project.send(:include, RedminePastebin::ProjectPastesPatch)
+end
 
-  unless User.included_modules.include? RedminePastebin::UserPastesPatch
-    User.send(:include, RedminePastebin::UserPastesPatch)
-  end
+unless User.included_modules.include? RedminePastebin::UserPastesPatch
+  User.send(:include, RedminePastebin::UserPastesPatch)
 end
 
 Redmine::Plugin.register :redmine_pastebin do

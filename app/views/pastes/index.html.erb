@@ -4,8 +4,17 @@
 
 <% content_for :header_tags do %>
 <style type="text/css">
-.paste .timestamp {
-  font-size: 90%;
+.paste .right {
+  font-size: 80%;
+  float: right;
+  margin-left: 2em;
+  width: 30%;
+  display: inline-block;
+  text-align: right;
+}
+
+.paste .authorship {
+  font-size: 80%;
 }
 </style>
 <% end %>
@@ -16,19 +25,30 @@
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
 <% @pastes.each do |paste| %>
-  <p class="paste">
-    <%= paste_timestamp(paste) %>&nbsp;&ndash;
-    <%= link_to_paste paste %>&nbsp;&ndash;
+  <div class="paste">
+
+    <p class='right'>
+      <strong class='lang'><%= pastebin_language_name(paste.lang) %></strong>
+      <br>
+      <span class='links'>
+      <%= manage_paste_links(paste).html_safe %>
+      </span>
+    </p>
+
+    <%= link_to_paste paste %>
     <% unless @project %>
-      <%= link_to_project paste.project %>&nbsp;&ndash;
+      <%= link_to_project(paste.project).html_safe %>
     <% end %>
-    <%= pastebin_language_name(paste.lang) %>&nbsp;&ndash;
-    <code><%=h paste.short_text %></code><br>
+    <br>
+    <code><%= paste.short_text %></code>
+    <br>
+    <br>
+    <span class='authorship'>
+      <%= render :partial => "authorship", :locals => { :paste => paste } %>
+    </span>
 
-    <%= render :partial => "authorship", :locals => { :paste => paste } %>
-
-    <%= manage_paste_links(paste) %>
-  </p>
+  </div>
+  <div style="clear:both"><hr></div>
 <% end %>
 
 <p class="pagination">

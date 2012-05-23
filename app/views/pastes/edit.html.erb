@@ -6,7 +6,7 @@
 <%= render :partial => "authorship", :locals => { :paste => @paste } %>
 </p>
 
-<% labelled_tabular_form_for :paste, @paste,
+<%= labelled_form_for @paste,
    :url => { :action => "update", :id => @paste },
    :html => { :method => :put } do |f| %>
 <div class="box">
@@ -19,8 +19,8 @@
          :rows => 25, :cols => 80 %></p>
 </div>
 
-<%=l :text_paste_update_or_make_new,
+<%=l(:text_paste_update_or_make_new,
    :update => f.submit(l(:button_paste_update)),
    :make_new => submit_tag(l(:button_paste_make_new),
-                           :onclick => "$('fork').value = 'yes'") %>
+                           :onclick => "$('fork').value = 'yes'")).html_safe %>
 <% end %>

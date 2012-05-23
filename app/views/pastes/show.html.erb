@@ -18,7 +18,7 @@ table.CodeRay td.line_numbers {
 <h2><%=h @paste.title %></h2>
 
 <p>
-<%=l :label_paste_link_here, :link => link_to(paste_url(@paste), @paste) %>
+<%=l(:label_paste_link_here, :link => link_to(paste_url(@paste), @paste)).html_safe %>
 </p>
 
 <p>
@@ -27,11 +27,11 @@ table.CodeRay td.line_numbers {
 </p>
 
 <div class="paste">
-<%= highlighted_content_for_paste(@paste) %>
+<%= highlighted_content_for_paste(@paste).html_safe %>
 </div>
 
 <p>
-<%= manage_paste_links(@paste) %>
+<%= manage_paste_links(@paste).html_safe %>
 </p>
 
 <%= render "sidebar" %>

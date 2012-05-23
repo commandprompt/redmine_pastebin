@@ -2,7 +2,7 @@
 
 <h2><%=l :label_paste_new %></h2>
 
-<% labelled_tabular_form_for :paste, @paste, :url => { :action => "create",
+<%= labelled_form_for @paste, :url => { :action => "create",
      :project_id => @paste.project.id } do |f| %>
 <div class="box">
   <p><%= f.text_field :title, :label => :field_paste_title %></p>

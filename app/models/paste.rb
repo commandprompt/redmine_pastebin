@@ -24,7 +24,7 @@ class Paste < ActiveRecord::Base
   belongs_to :project
   belongs_to :author, :class_name => 'User'
 
-  named_scope :for_project, lambda { |project|
+  scope :for_project, lambda { |project|
     { :conditions => { :project_id => project } }
   }
 

@@ -75,7 +75,7 @@ module PastesHelper
 
     # TODO: hard-coding code-ray for :table option
     content_tag :div, :class => "syntaxhl box" do
-      ::CodeRay.scan(paste.text, paste.lang).html(:line_numbers => :table)
+      ::CodeRay.scan(paste.text, paste.lang).html(:line_numbers => :table).html_safe
     end
   end
 

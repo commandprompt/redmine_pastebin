@@ -25,7 +25,7 @@ class PastesController < ApplicationController
 
   before_filter :find_project, :authorize
 
-  accept_key_auth :index
+  accept_rss_auth :index
   accept_api_auth :index, :show, :download, :create, :update, :destroy
 
   def index
