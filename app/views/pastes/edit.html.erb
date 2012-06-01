@@ -10,6 +10,7 @@
    :url => { :action => "update", :id => @paste },
    :html => { :method => :put } do |f| %>
 <div class="box">
+<fieldset class="tabular">
   <%= hidden_field_tag "fork" %>
 
   <p><%= f.text_field :title, :label => :field_paste_title %></p>
@@ -17,6 +18,7 @@
          :label => :field_paste_lang %></p>
   <p><%= f.text_area :text, :label => :field_paste_text,
          :rows => 25, :cols => 80 %></p>
+</fieldset>
 </div>
 
 <%=l(:text_paste_update_or_make_new,

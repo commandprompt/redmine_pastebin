@@ -5,11 +5,13 @@
 <%= labelled_form_for @paste, :url => { :action => "create",
      :project_id => @paste.project.id } do |f| %>
 <div class="box">
+<fieldset class="tabular">
   <p><%= f.text_field :title, :label => :field_paste_title %></p>
   <p><%= f.select :lang, pastebin_language_choices,
          :label => :field_paste_lang %></p>
   <p><%= f.text_area :text, :label => :field_paste_text,
          :rows => 25, :cols => 80 %></p>
+</fieldset>
 </div>
 <%= f.submit l(:button_paste_submit) %>
 <% end %>
