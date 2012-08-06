@@ -5,12 +5,12 @@ it:
   label_paste_link_here: "Collegamento a questo paste: %{link}"
   label_paste_syntax: "Sintassi: %{lang}"
   label_paste_new: Nuovo Paste
-  label_paste_edit: Modifica %{link}
+  label_paste_edit: "Modifica %{link}"
   field_title: Titolo (opzionale)
   field_lang: Sintassi
   field_text: Testo
   button_paste_submit: Paste!
-  text_paste_update_or_make_new: %{update} o %{make_new}
+  text_paste_update_or_make_new: "%{update} o %{make_new}"
   button_paste_update: Aggiorna
   button_paste_make_new: Salva come nuovo paste
   notice_paste_created: Creazione effettuata con successo

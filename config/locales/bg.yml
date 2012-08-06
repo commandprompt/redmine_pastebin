@@ -5,12 +5,12 @@ bg:
   label_paste_link_here: "Връзка към тази paste: %{link}"
   label_paste_syntax: "Синтаксис: %{lang}"
   label_paste_new: Нова paste
-  label_paste_edit: Редактиране %{link}
+  label_paste_edit: "Редактиране %{link}"
   field_paste_title: Заглавие (незадължително)
   field_paste_lang: Синтаксис
   field_paste_text: Текст
   button_paste_submit: Запис
-  text_paste_update_or_make_new: %{update} или %{make_new}
+  text_paste_update_or_make_new: "%{update} или %{make_new}"
   button_paste_update: Обновяване
   button_paste_make_new: Запис като нова paste
   notice_paste_created: Успешен запис
