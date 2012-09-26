@@ -62,6 +62,7 @@ class PastesController < ApplicationController
   def create
     @paste = @project.pastes.build(params[:paste])
     @paste.author = User.current
+    @paste.secure = (params[:paste][:secure] == "1")
     if @paste.save
       flash[:notice] = l(:notice_paste_created)
       redirect_to @paste
@@ -98,8 +99,15 @@ class PastesController < ApplicationController
     else
       @pastes = Paste
     end
+    @pastes = @pastes.insecure
+
     if params[:id].present?
-      @paste = @pastes.find(params[:id])
+      if Paste.secure_id?(params[:id])
+        @paste = Paste.secure.find_by_access_token(params[:id])
+        @pastes = nil
+      else
+        @paste = @pastes.find(params[:id])
+      end
       @project ||= @paste.project
     end
   rescue ActiveRecord::RecordNotFound

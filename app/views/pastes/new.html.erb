@@ -10,6 +10,8 @@
          :label => :field_paste_lang %></p>
   <p><%= f.text_area :text, :label => :field_paste_text,
          :rows => 25, :cols => 80 %></p>
+  <p><%= f.check_box :secure, :label => :field_paste_secure %><br/>
+   <%=l :paste_security_hint %></p>
 </div>
 <%= f.submit l(:button_paste_submit) %>
 <% end %>

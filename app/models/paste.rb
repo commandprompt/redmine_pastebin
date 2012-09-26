@@ -16,6 +16,8 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+require "digest/sha1"
+
 class Paste < ActiveRecord::Base
   unloadable # really?
 
@@ -27,6 +29,9 @@ class Paste < ActiveRecord::Base
   named_scope :for_project, lambda { |project|
     { :conditions => { :project_id => project } }
   }
+
+  named_scope :secure, :conditions => "access_token IS NOT NULL"
+  named_scope :insecure, :conditions => "access_token IS NULL"
 
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project
@@ -55,5 +60,36 @@ class Paste < ActiveRecord::Base
     else
       text[0..SHORT_TEXT_LIMIT] + "..."
     end
+  end
+
+  def secure?
+    access_token.present?
+  end
+  alias_method :secure, :secure?
+
+  def to_param
+    secure? ? access_token : id.to_s
+  end
+
+  def secure!
+    # update_attribute won't work as access_token isn't listed as
+    # `accessible'
+    self.secure = true
+    save!
+  end
+
+  def secure=(value)
+    self.access_token = value ? make_access_token : nil
+  end
+
+  def self.secure_id?(id)
+    # assume SHA1 hexdigest
+    id =~ /^[0-9a-f]{40}$/
+  end
+
+  private
+
+  def make_access_token
+    Digest::SHA1.hexdigest("#{self.inspect}@#{Time.now.to_f}")
   end
 end

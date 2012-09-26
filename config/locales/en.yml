@@ -9,6 +9,8 @@ en:
   field_paste_title: Title (optional)
   field_paste_lang: Syntax
   field_paste_text: Text
+  field_paste_secure: Secure
+  paste_security_hint: (access for people with a direct URL only)
   button_paste_submit: Paste!
   text_paste_update_or_make_new: "%{update} or %{make_new}"
   button_paste_update: Update paste
