@@ -33,6 +33,9 @@ class Paste < ActiveRecord::Base
   named_scope :secure, :conditions => "access_token IS NOT NULL"
   named_scope :insecure, :conditions => "access_token IS NULL"
 
+  named_scope :expired, :conditions => "expires_at <= current_timestamp"
+  default_scope :conditions => "expires_at IS NULL OR expires_at > current_timestamp"
+
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project
 
@@ -85,6 +88,14 @@ class Paste < ActiveRecord::Base
   def self.secure_id?(id)
     # assume SHA1 hexdigest
     id =~ /^[0-9a-f]{40}$/
+  end
+
+  def expired?
+    expires_at.present? && expires_at <= Time.now
+  end
+
+  def expire_in(seconds)
+    self.expires_at = Time.now + seconds
   end
 
   private

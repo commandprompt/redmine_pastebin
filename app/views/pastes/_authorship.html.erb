@@ -3,3 +3,6 @@
 <% if paste.updated_on != paste.created_on %>
   <%= l(:label_updated_time, time_tag(paste.updated_on)) %>.
 <% end %>
+<% if paste.expires_at.present? %>
+ <span style="color: red;"><%= l(:label_paste_expires_at) %> <%= format_time(paste.expires_at) %></span>
+<% end %>

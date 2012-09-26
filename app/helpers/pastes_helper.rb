@@ -45,6 +45,8 @@ module PastesHelper
     "Python" => "py",
     "Ruby" => "rb",
   }
+
+  PASTEBIN_EXPIRATION_CHOICES = [[:never, 0], [:an_hour, 1.hour], [:a_day, 1.day]]
   
   def pastebin_lang_to_scanner(lang)
     PASTEBIN_SCANNERS_MAP[lang] || lang
@@ -56,6 +58,10 @@ module PastesHelper
 
   def pastebin_language_choices
     PASTEBIN_LANGS.map { |v| [v, pastebin_lang_to_scanner(v)] }
+  end
+
+  def pastebin_expiration_choices
+    PASTEBIN_EXPIRATION_CHOICES.map { |x| [translate(:"paste_expires_in_#{x.first}"), x.last] }
   end
 
   def pastebin_filename_suffix(paste)

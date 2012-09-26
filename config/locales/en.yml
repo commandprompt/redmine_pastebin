@@ -10,6 +10,11 @@ en:
   field_paste_lang: Syntax
   field_paste_text: Text
   field_paste_secure: Secure
+  field_paste_expires: Expires
+  paste_expires_in_never: Never
+  paste_expires_in_an_hour: In an hour
+  paste_expires_in_a_day: In a day
+  label_paste_expires_at: "Expires at:"
   paste_security_hint: (access for people with a direct URL only)
   button_paste_submit: Paste!
   text_paste_update_or_make_new: "%{update} or %{make_new}"

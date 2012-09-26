@@ -63,6 +63,7 @@ class PastesController < ApplicationController
     @paste = @project.pastes.build(params[:paste])
     @paste.author = User.current
     @paste.secure = (params[:paste][:secure] == "1")
+    @paste.expire_in(params[:paste][:expires].to_i) if params[:paste][:expires].to_i > 0
     if @paste.save
       flash[:notice] = l(:notice_paste_created)
       redirect_to @paste
