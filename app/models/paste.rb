@@ -31,7 +31,9 @@ class Paste < ActiveRecord::Base
   }
 
   named_scope :secure, :conditions => "access_token IS NOT NULL"
-  named_scope :insecure, :conditions => "access_token IS NULL"
+  named_scope :visible_to, lambda { |user|
+    { :conditions => (user.admin? ? nil : ["access_token IS NULL OR author_id = ?", user.id]) }
+  }
 
   named_scope :expired, :conditions => "expires_at <= current_timestamp"
   default_scope :conditions => "expires_at IS NULL OR expires_at > current_timestamp"

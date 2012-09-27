@@ -100,7 +100,7 @@ class PastesController < ApplicationController
     else
       @pastes = Paste
     end
-    @pastes = @pastes.insecure
+    @pastes = @pastes.visible_to(User.current)
 
     if params[:id].present?
       if Paste.secure_id?(params[:id])
