@@ -104,7 +104,7 @@ class PastesController < ApplicationController
 
     if params[:id].present?
       if Paste.secure_id?(params[:id])
-        @paste = Paste.secure.find_by_access_token(params[:id])
+        @paste = Paste.secure.find_by_access_token(params[:id]) || raise(ActiveRecord::RecordNotFound)
         @pastes = nil
       else
         @paste = @pastes.find(params[:id])
