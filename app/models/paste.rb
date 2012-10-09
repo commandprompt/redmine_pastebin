@@ -100,6 +100,12 @@ class Paste < ActiveRecord::Base
     self.expires_at = Time.now + seconds
   end
 
+  def self.wipe_all_expired
+    with_exclusive_scope do
+      Paste.expired.delete_all
+    end
+  end
+
   private
 
   def make_access_token
