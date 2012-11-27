@@ -26,17 +26,17 @@ class Paste < ActiveRecord::Base
   belongs_to :project
   belongs_to :author, :class_name => 'User'
 
-  named_scope :for_project, lambda { |project|
-    { :conditions => { :project_id => project } }
+  scope :for_project, lambda { |project|
+    where({ :project_id => project })
   }
 
-  named_scope :secure, :conditions => "access_token IS NOT NULL"
-  named_scope :visible_to, lambda { |user|
-    { :conditions => (user.admin? ? nil : ["access_token IS NULL OR author_id = ?", user.id]) }
+  scope :secure, where("access_token IS NOT NULL")
+  scope :visible_to, lambda { |user|
+    where(user.admin? ? nil : ["access_token IS NULL OR author_id = ?", user.id])
   }
 
-  named_scope :expired, :conditions => "expires_at <= current_timestamp"
-  default_scope :conditions => "expires_at IS NULL OR expires_at > current_timestamp"
+  scope :expired, where("expires_at <= current_timestamp")
+  default_scope where("expires_at IS NULL OR expires_at > current_timestamp")
 
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project

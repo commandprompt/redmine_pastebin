@@ -17,32 +17,16 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'redmine'
-require 'dispatcher'
-
-require_dependency 'redmine_pastebin/view_hooks'
-
-Dispatcher.to_prepare :redmine_pastebin do
-  require_dependency 'project'
-  require_dependency 'user'
-
-  unless Project.included_modules.include? RedminePastebin::ProjectPastesPatch
-    Project.send(:include, RedminePastebin::ProjectPastesPatch)
-  end
-
-  unless User.included_modules.include? RedminePastebin::UserPastesPatch
-    User.send(:include, RedminePastebin::UserPastesPatch)
-  end
-end
 
 Redmine::Plugin.register :redmine_pastebin do
   name 'Redmine Pastebin plugin'
   author 'Alex Shulgin <ash@commandprompt.com>'
   description 'A real pastebin plugin for redmine'
-  version '0.0.1'
+  version '0.2.0'
   url 'https://github.com/commandprompt/redmine_pastebin/'
 #  author_url 'http://example.com/about'
 
-  requires_redmine :version_or_higher => '1.1.0'
+  requires_redmine :version_or_higher => '2.0.x'
 
   project_module :pastes do
     permission :view_pastes,   :pastes => [:index, :show, :download]
@@ -63,3 +47,16 @@ end
 Redmine::Search.map do |search|
   search.register :pastes
 end
+
+prepare_block = Proc.new do
+  Project.send(:include, RedminePastebin::ProjectPastesPatch)
+  User.send(:include, RedminePastebin::UserPastesPatch)
+end
+
+if Rails.env.development?
+  ActionDispatch::Reloader.to_prepare { prepare_block.call }
+else
+  prepare_block.call
+end
+
+require_dependency 'redmine_pastebin/view_hooks'

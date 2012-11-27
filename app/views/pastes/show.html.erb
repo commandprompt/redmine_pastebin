@@ -18,7 +18,7 @@ table.CodeRay td.line_numbers {
 <h2><%=h @paste.title %></h2>
 
 <p>
-<%=l :label_paste_link_here, :link => link_to(paste_url(@paste), @paste) %>
+<%= l(:label_paste_link_here, :link => link_to(paste_url(@paste), @paste)).html_safe %>
 </p>
 
 <p>

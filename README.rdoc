@@ -2,9 +2,12 @@
 
 A real pastebin plugin for Redmine.
 
+For Redmine versions prior to 2.x, check out the pre-2.x branch.
+
 = Installation Notes
 
-$ script/plugin install ...
+Use git to clone to plugins/, then run the DB migrations:
+
 $ rake db:migrate_plugins
 
 Don't forget to setup roles permissions in the Pastes section.

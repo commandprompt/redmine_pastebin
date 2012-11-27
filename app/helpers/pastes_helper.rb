@@ -81,7 +81,7 @@ module PastesHelper
 
     # TODO: hard-coding code-ray for :table option
     content_tag :div, :class => "syntaxhl box" do
-      ::CodeRay.scan(paste.text, paste.lang).html(:line_numbers => :table)
+      ::CodeRay.scan(paste.text, paste.lang).html(:line_numbers => :table).html_safe
     end
   end
 
@@ -97,38 +97,39 @@ module PastesHelper
   end
 
   def link_to_paste(paste)
-    link_to paste.title, paste
+    link_to(paste.title, paste)
   end
 
   def edit_paste_link(paste, title = l(:button_edit))
-    link_to_if_authorized title, url_to_paste("edit", paste),
-      :class => "icon icon-edit"
+    link_to_if_authorized(title, url_to_paste("edit", paste),
+                          :class => "icon icon-edit")
   end
 
   def delete_paste_link(paste, title = l(:button_delete))
-    link_to_if_authorized title, url_to_paste("destroy", paste),
-      :class => "icon icon-del",
-      :method => :delete, :confirm => l(:text_paste_delete_confirmation)
+    link_to_if_authorized(title, url_to_paste("destroy", paste),
+                          :class => "icon icon-del",
+                          :method => :delete,
+                          :confirm => l(:text_paste_delete_confirmation))
   end
 
   def download_paste_link(paste, title = l(:button_download))
-    link_to title, url_to_paste("download", paste),
-      :class => "icon icon-save"
+    link_to(title, url_to_paste("download", paste),
+            :class => "icon icon-save")
   end
 
   def manage_paste_links(paste)
     [edit_paste_link(paste),
      delete_paste_link(paste),
-     download_paste_link(paste)].join("\n")
+     download_paste_link(paste)].join("\n").html_safe
   end
 
   def link_to_all_pastes
-    link_to l(:label_paste_view_all), url_to_paste("index"),
-      :class => "icon icon-multiple"
+    link_to(l(:label_paste_view_all), url_to_paste("index"),
+            :class => "icon icon-multiple")
   end
 
   def link_to_new_paste
-    link_to_if_authorized l(:label_paste_new), url_to_paste("new"),
-      :class => "icon icon-add"
+    link_to_if_authorized(l(:label_paste_new), url_to_paste("new"),
+                          :class => "icon icon-add")
   end
 end
