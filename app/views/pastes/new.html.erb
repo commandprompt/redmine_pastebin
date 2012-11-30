@@ -2,9 +2,9 @@
 
 <h2><%=l :label_paste_new %></h2>
 
-<%= labelled_tabular_form_for @paste,
+<%= labelled_form_for @paste,
     :url => { :action => "create", :project_id => @paste.project.id } do |f| %>
-<div class="box">
+<div class="box tabular">
   <p><%= f.text_field :title, :label => :field_paste_title %></p>
   <p><%= f.select :lang, pastebin_language_choices,
          :label => :field_paste_lang %></p>
@@ -12,7 +12,7 @@
          :rows => 25, :cols => 80 %></p>
   <p><%= f.check_box :secure, :label => :field_paste_secure %><br/>
    <%=l :paste_security_hint %></p>
-  <p><label for="paste[expires]"><%=l :field_paste_expires %></label>
+  <p><label for="paste_expires"><%=l :field_paste_expires %></label>
    <%= select_tag 'paste[expires]',
        options_from_collection_for_select(pastebin_expiration_choices,
                                           :last, :first) %></p>

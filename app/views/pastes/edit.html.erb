@@ -6,10 +6,10 @@
 <%= render :partial => "authorship", :locals => { :paste => @paste } %>
 </p>
 
-<%= labelled_tabular_form_for @paste,
+<%= labelled_form_for @paste,
    :url => { :action => "update", :id => @paste },
    :html => { :method => :put } do |f| %>
-<div class="box">
+<div class="box tabular">
   <%= hidden_field_tag "fork" %>
 
   <p><%= f.text_field :title, :label => :field_paste_title %></p>
