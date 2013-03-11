@@ -6,16 +6,16 @@
     :url => { :action => "create", :project_id => @paste.project.id } do |f| %>
 <div class="box tabular">
   <p><%= f.text_field :title, :label => :field_paste_title %></p>
-  <p><%= f.select :lang, pastebin_language_choices,
-         :label => :field_paste_lang %></p>
-  <p><%= f.text_area :text, :label => :field_paste_text,
-         :rows => 25, :cols => 80 %></p>
-  <p><%= f.check_box :secure, :label => :field_paste_secure %><br/>
-   <%=l :paste_security_hint %></p>
+  <p><%= f.check_box :secure, :label => :field_paste_secure %>
+     <%=l :paste_security_hint %></p>
   <p><label for="paste_expires"><%=l :field_paste_expires %></label>
    <%= select_tag 'paste[expires]',
        options_from_collection_for_select(pastebin_expiration_choices,
                                           :last, :first) %></p>
+  <p><%= f.select :lang, pastebin_language_choices,
+         :label => :field_paste_lang %></p>
+  <p><%= f.text_area :text, :label => :field_paste_text,
+         :rows => 25, :cols => 80 %></p>
 </div>
 <%= f.submit l(:button_paste_submit) %>
 <% end %>
