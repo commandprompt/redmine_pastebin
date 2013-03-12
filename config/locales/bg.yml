@@ -9,6 +9,13 @@ bg:
   field_paste_title: Заглавие (незадължително)
   field_paste_lang: Синтаксис
   field_paste_text: Текст
+  field_paste_secure: Частна
+  field_paste_expires: Изтича
+  paste_expires_in_never: Никога
+  paste_expires_in_an_hour: След един час
+  paste_expires_in_a_day: След един ден
+  label_paste_expires_at: "Изтича на:"
+  paste_security_hint: (достъп за хора само с директен URL)
   button_paste_submit: Запис
   text_paste_update_or_make_new: "%{update} или %{make_new}"
   button_paste_update: Обновяване
