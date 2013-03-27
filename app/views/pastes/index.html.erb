@@ -6,6 +6,12 @@
 .paste {
   margin-bottom: 1.5em;
 }
+.paste .author, .paste .actions {
+  float: right;
+}
+.paste .box {
+  margin-bottom: 2px;
+}
 </style>
 <% end %>
 
@@ -20,12 +26,16 @@
     <% unless @project %>
       <%= link_to_project paste.project %>&nbsp;&ndash;
     <% end %>
-    <%= pastebin_language_name(paste.lang) %><br>
+    <div class="author">
+      <%= render :partial => "authorship", :locals => { :paste => paste } %>
+    </div>
+    <%= pastebin_language_name(paste.lang) %>
     <div class="box">
       <pre><%=h paste.short_text %></pre>
     </div>
-    <%= render :partial => "authorship", :locals => { :paste => paste } %><br>
-    <%= manage_paste_links(paste) %>
+    <div class="actions">
+      <%= manage_paste_links(paste) %>
+    </div>
   </div>
 <% end %>
 
