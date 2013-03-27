@@ -27,6 +27,8 @@ class PastesController < ApplicationController
 
   accept_rss_auth :index
 
+  accept_api_auth :create
+
   def index
     @limit = per_page_option
 
