@@ -21,7 +21,8 @@ require 'coderay'
 module PastesHelper
   PASTEBIN_LANGS = ["Plain Text", "C", "C++", "Java", "JavaScript",
                     "Python", "Ruby", "PHP", "SQL", "XML", "Diff",
-                    "Clojure", "CSS", "HAML", "HTML", "JSON", "YAML"]
+                    "Clojure", "CSS", "HAML", "HTML", "JSON", "YAML",
+                    "Bash"]
 
   # This maps pretty language/syntax name to identifier that CodeRay
   # can understand.  If a language is not mapped, unchanged name is
