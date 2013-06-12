@@ -1,0 +1,26 @@
+# Russian strings go here for Rails i18n
+en:
+  label_paste_plural: Черновики
+  label_paste_view_all: Просмотреть все черновики
+  label_paste_link_here: "Ссылка на этот черновик: %{link}"
+  label_paste_syntax: "Синтакс: %{lang}"
+  label_paste_new: Добавить запись
+  label_paste_edit: "Редактировать %{link}"
+  field_paste_title: Заголовок (не обязательно)
+  field_paste_lang: Синтакс
+  field_paste_text: Текст
+  field_paste_secure: Защитить
+  field_paste_expires: Истекает
+  paste_expires_in_never: Никогда
+  paste_expires_in_an_hour: Через час
+  paste_expires_in_a_day: Через сутки
+  label_paste_expires_at: "Истекает:"
+  paste_security_hint: (доступ только по прямой ссылке)
+  button_paste_submit: Добавить
+  text_paste_update_or_make_new: "%{update} или %{make_new}"
+  button_paste_update: Обновить запись
+  button_paste_make_new: Сделать новой записью
+  notice_paste_created: Успешно добавлено
+  notice_paste_updated: Успешно обновлено
+  notice_paste_destroyed: Запись удалена
+  text_paste_delete_confirmation: Вы уверены, что хотите удалить запись?
