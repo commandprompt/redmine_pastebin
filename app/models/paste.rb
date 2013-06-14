@@ -31,12 +31,20 @@ class Paste < ActiveRecord::Base
   }
 
   scope :secure, where("access_token IS NOT NULL")
-  scope :visible_to, lambda { |user|
-    where(user.admin? ? nil : ["access_token IS NULL OR author_id = ?", user.id])
-  }
 
   scope :expired, where("expires_at <= current_timestamp")
-  default_scope where("expires_at IS NULL OR expires_at > current_timestamp")
+  scope :unexpired, where("expires_at IS NULL OR expires_at > current_timestamp")
+
+  #
+  # * Admin users should be able to see all pastes (even secure ones.)
+  #
+  # * An ordinary user can see a secure paste only if he has authored it.
+  #
+  # * Never show expired pastes even to an admin.
+  #
+  scope :visible, lambda { |user, options={}|
+    where(user.admin? ? nil : ["access_token IS NULL OR author_id = ?", user.id]).unexpired
+  }
 
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project
@@ -90,6 +98,12 @@ class Paste < ActiveRecord::Base
   def self.secure_id?(id)
     # assume SHA1 hexdigest
     id =~ /^[0-9a-f]{40}$/
+  end
+
+  def self.find_by_secure_id(id)
+    with_exclusive_scope do
+      find_by_access_token(id)
+    end
   end
 
   def expired?
