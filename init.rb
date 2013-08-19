@@ -48,6 +48,14 @@ Redmine::Search.map do |search|
   search.register :pastes
 end
 
+Redmine::WikiFormatting::Macros.register do
+  desc "A link to paste by id: {{paste(NNN)}}"
+  macro :paste do |obj, args|
+    id = args.first
+    link_to("paste ##{id}", paste_path(id)) unless id.blank?
+  end
+end
+
 prepare_block = Proc.new do
   Project.send(:include, RedminePastebin::ProjectPastesPatch)
   User.send(:include, RedminePastebin::UserPastesPatch)
