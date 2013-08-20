@@ -52,7 +52,10 @@ Redmine::WikiFormatting::Macros.register do
   desc "A link to paste by id: {{paste(NNN)}}"
   macro :paste do |obj, args|
     id = args.first
-    link_to("paste ##{id}", paste_path(id)) unless id.blank?
+    unless id.blank? or Paste.secure_id?(id)
+      paste = Paste.find_by_id(id)
+      link_to(paste.title, paste_path(id)) if paste
+    end
   end
 end
 
