@@ -36,12 +36,12 @@ class Paste < ActiveRecord::Base
   scope :unexpired, where("expires_at IS NULL OR expires_at > current_timestamp")
 
   #
-  # * Restrict to projects where the user is a member with a role
-  #   allowing to view pastes.
+  # * Restrict to projects where the user has a role allowing to view
+  #   pastes.
   #
   # * Restrict to specific project, if given.
   #
-  # * Admin users should be able to see all pastes, even secure ones)
+  # * Admin users should be able to see all pastes, even secure ones.
   #
   # * An ordinary user can see a secure paste only if he has authored it.
   #
@@ -49,11 +49,9 @@ class Paste < ActiveRecord::Base
   #
   scope :visible, lambda{ |user=User.current, *args|
     o = args.first || {}
-    o = o.merge(:member => true)
 
-    s = self
+    s = where(Project.allowed_to_condition(user, :view_pastes, o)).includes(:project)
     unless user.admin?
-      s = s.where(Project.allowed_to_condition(user, :view_pastes, o)).includes(:project)
       s = s.where(["access_token IS NULL OR author_id = ?", user.id])
     end
     s.unexpired
