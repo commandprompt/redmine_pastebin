@@ -47,7 +47,9 @@ class Paste < ActiveRecord::Base
   #
   # * Never show expired pastes even to an admin.
   #
-  scope :visible, lambda{ |user=User.current, options={}|
+  scope :visible, lambda{ |user=nil, options={}|
+    user ||= User.current
+
     s = where(Project.allowed_to_condition(user, :view_pastes, options)).includes(:project)
     unless user.admin?
       s = s.where(["access_token IS NULL OR author_id = ?", user.id])
@@ -55,12 +57,15 @@ class Paste < ActiveRecord::Base
     s.unexpired
   }
 
+  # this limits what's exposed by event providers below
+  default_scope visible
+
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project
 
   acts_as_event :title => Proc.new{ |o| o.title },
     :url => Proc.new{ |o| { :controller => 'pastes', :action => 'show',
-      :id => o.id } }
+      :id => o.to_param } }
 
   acts_as_activity_provider :find_options => {:include => [:project, :author]},
     :author_key => :author_id
@@ -110,7 +115,9 @@ class Paste < ActiveRecord::Base
   end
 
   def self.find_by_secure_id(id)
-    find_by_access_token(id)
+    with_exclusive_scope do
+      find_by_access_token(id)
+    end
   end
 
   def expired?
