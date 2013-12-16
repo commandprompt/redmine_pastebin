@@ -47,17 +47,13 @@ class Paste < ActiveRecord::Base
   #
   # * Never show expired pastes even to an admin.
   #
-  scope :visible, lambda{ |user=User.current, *args|
-    o = args.first || {}
-
-    s = where(Project.allowed_to_condition(user, :view_pastes, o)).includes(:project)
+  scope :visible, lambda{ |user=User.current, options={}|
+    s = where(Project.allowed_to_condition(user, :view_pastes, options)).includes(:project)
     unless user.admin?
       s = s.where(["access_token IS NULL OR author_id = ?", user.id])
     end
     s.unexpired
   }
-
-  default_scope visible
 
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project
@@ -114,9 +110,7 @@ class Paste < ActiveRecord::Base
   end
 
   def self.find_by_secure_id(id)
-    with_exclusive_scope do
-      find_by_access_token(id)
-    end
+    find_by_access_token(id)
   end
 
   def expired?
