@@ -1,0 +1,26 @@
+# Spanish strings go here for Rails i18n
+es:
+  label_paste_plural: Pastes
+  label_paste_view_all: Ver todos los pastes
+  label_paste_link_here: "Link a este paste: %{link}"
+  label_paste_syntax: "Sintaxis: %{lang}"
+  label_paste_new: Paste nuevo
+  label_paste_edit: "Editar %{link}"
+  field_paste_title: Título (opcional)
+  field_paste_lang: Sintaxis
+  field_paste_text: Texto
+  field_paste_secure: Seguro
+  field_paste_expires: Expira
+  paste_expires_in_never: Nunca
+  paste_expires_in_an_hour: En una hora
+  paste_expires_in_a_day: En un día
+  label_paste_expires_at: "Expira en:"
+  paste_security_hint: (acceso solamente para personas con una URL directa)
+  button_paste_submit: Paste!
+  text_paste_update_or_make_new: "%{update} ó %{make_new}"
+  button_paste_update: Actualizar paste
+  button_paste_make_new: Hacer este un nuevo paste
+  notice_paste_created: Paste creado exitosamente
+  notice_paste_updated: Paste actualizado exitosamente
+  notice_paste_destroyed: Paste removido
+  text_paste_delete_confirmation: ¿Seguro que desea eliminar este paste?
