@@ -57,8 +57,25 @@ class Paste < ActiveRecord::Base
     s.unexpired
   }
 
-  # this limits what's exposed by event providers below
-  default_scope visible
+  #
+  # The default scope limits what's exposed by event providers below.
+  #
+  # The use of block is important so that current user is evaluated
+  # every time inside the visible scope as opposed to being captured
+  # at the time of Paste class load.
+  #
+  default_scope { visible }
+
+  #
+  # We need to use exclusive scope to be able to specify a user other
+  # than the current one.  Otherwise the default scope will be in
+  # conflict by overriding the user.
+  #
+  def self.visible_to(user, options={})
+    with_exclusive_scope do
+      Paste.visible(user, options)
+    end
+  end
 
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project

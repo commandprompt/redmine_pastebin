@@ -95,7 +95,7 @@ class PastesController < ApplicationController
 
   def find_paste_and_project
     @project = Project.find(params[:project_id]) if params[:project_id].present?
-    @pastes = Paste.visible(User.current, :project => @project)
+    @pastes = Paste.visible_to(User.current, :project => @project)
 
     if params[:id].present?
       if Paste.secure_id?(params[:id])
