@@ -1,0 +1,25 @@
+tr:
+  label_paste_plural: Yapıştırılan Metinler
+  label_paste_view_all: Tüm yapıştırılan metinlere bak
+  label_paste_link_here: "Bu yapıştırılan metine link: %{link}"
+  label_paste_syntax: "Sözdizimi: %{lang}"
+  label_paste_new: Yeni Metin Yapıştır
+  label_paste_edit: "Düzenle %{link}"
+  field_paste_title: Başlık (seçime bağlı)
+  field_paste_lang: Sözdizimi
+  field_paste_text: Yazı
+  field_paste_secure: Güvenli
+  field_paste_expires: Zaman aşımı
+  paste_expires_in_never: Asla
+  paste_expires_in_an_hour: Bir saatte
+  paste_expires_in_a_day: Bir günde
+  label_paste_expires_at: "Şu zamana kadar:"
+  paste_security_hint: (yalnızca elinde link olanların erişimine açık)
+  button_paste_submit: Yapıştır!
+  text_paste_update_or_make_new: "%{update} veya %{make_new}"
+  button_paste_update: Yapıştırılan metni güncelle
+  button_paste_make_new: Yeni bir metin olarak yapıştır
+  notice_paste_created: Yapıştırma başarılı
+  notice_paste_updated: Metin güncellemesi başarılı
+  notice_paste_destroyed: Metin kaldırıldı
+  text_paste_delete_confirmation: Yapıştırılan metin kaldırılacak, emin misiniz?
