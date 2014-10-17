@@ -31,19 +31,58 @@ class Paste < ActiveRecord::Base
   }
 
   scope :secure, where("access_token IS NOT NULL")
-  scope :visible_to, lambda { |user|
-    where(user.admin? ? nil : ["access_token IS NULL OR author_id = ?", user.id])
-  }
 
   scope :expired, where("expires_at <= current_timestamp")
-  default_scope where("expires_at IS NULL OR expires_at > current_timestamp")
+  scope :unexpired, where("expires_at IS NULL OR expires_at > current_timestamp")
+
+  #
+  # * Restrict to projects where the user has a role allowing to view
+  #   pastes.
+  #
+  # * Restrict to specific project, if given.
+  #
+  # * Admin users should be able to see all pastes, even secure ones.
+  #
+  # * An ordinary user can see a secure paste only if he has authored it.
+  #
+  # * Never show expired pastes even to an admin.
+  #
+  scope :visible, lambda{ |user=nil, options={}|
+    user ||= User.current
+
+    s = where(Project.allowed_to_condition(user, :view_pastes, options)).includes(:project)
+    unless user.admin?
+      s = s.where(["access_token IS NULL OR author_id = ?", user.id])
+    end
+    s.unexpired
+  }
+
+  #
+  # The default scope limits what's exposed by event providers below.
+  #
+  # The use of block is important so that current user is evaluated
+  # every time inside the visible scope as opposed to being captured
+  # at the time of Paste class load.
+  #
+  default_scope { visible }
+
+  #
+  # We need to use exclusive scope to be able to specify a user other
+  # than the current one.  Otherwise the default scope will be in
+  # conflict by overriding the user.
+  #
+  def self.visible_to(user, options={})
+    with_exclusive_scope do
+      Paste.visible(user, options)
+    end
+  end
 
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
     :include => :project
 
   acts_as_event :title => Proc.new{ |o| o.title },
     :url => Proc.new{ |o| { :controller => 'pastes', :action => 'show',
-      :id => o.id } }
+      :id => o.to_param } }
 
   acts_as_activity_provider :find_options => {:include => [:project, :author]},
     :author_key => :author_id
@@ -90,6 +129,12 @@ class Paste < ActiveRecord::Base
   def self.secure_id?(id)
     # assume SHA1 hexdigest
     id =~ /^[0-9a-f]{40}$/
+  end
+
+  def self.find_by_secure_id(id)
+    with_exclusive_scope do
+      find_by_access_token(id)
+    end
   end
 
   def expired?

@@ -96,17 +96,12 @@ class PastesController < ApplicationController
   private
 
   def find_paste_and_project
-    if params[:project_id].present?
-      @project = Project.find(params[:project_id])
-      @pastes = @project.pastes
-    else
-      @pastes = Paste
-    end
-    @pastes = @pastes.visible_to(User.current)
+    @project = Project.find(params[:project_id]) if params[:project_id].present?
+    @pastes = Paste.visible_to(User.current, :project => @project)
 
     if params[:id].present?
       if Paste.secure_id?(params[:id])
-        @paste = Paste.secure.find_by_access_token(params[:id]) || raise(ActiveRecord::RecordNotFound)
+        @paste = Paste.find_by_secure_id(params[:id]) || raise(ActiveRecord::RecordNotFound)
         @pastes = nil
       else
         @paste = @pastes.find(params[:id])
