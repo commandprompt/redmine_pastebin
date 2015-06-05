@@ -21,6 +21,7 @@
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
 <% @pastes.each do |paste| %>
+  <% cache("paste-short-#{paste.id}-#{User.current.language}", skip_digest: true) do %>
   <div class="paste">
     <%= link_to_paste paste %>&nbsp;&ndash;
     <% unless @project %>
@@ -37,6 +38,7 @@
       <%= manage_paste_links(paste) %>
     </div>
   </div>
+  <% end %>
 <% end %>
 
 <p class="pagination">

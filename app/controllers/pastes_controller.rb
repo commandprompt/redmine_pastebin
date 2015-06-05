@@ -78,6 +78,8 @@ class PastesController < ApplicationController
       create
     else
       if @paste.update_attributes(params[:paste])
+        expire_fragment("paste-short-#{@paste.id}-#{User.current.language}")
+        expire_fragment("paste-#{@paste.id}-#{User.current.language}")
         flash[:notice] = l(:notice_paste_updated)
         redirect_to @paste
       else

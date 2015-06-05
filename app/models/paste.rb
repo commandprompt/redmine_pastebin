@@ -87,7 +87,13 @@ class Paste < ActiveRecord::Base
 
   def title
     t = super
-    t.present? ? t : "Paste ##{id}"
+    if t.present?
+      t
+    elsif not id.nil?
+      "Paste ##{id}"
+    else
+      ""
+    end
   end
 
   def description
