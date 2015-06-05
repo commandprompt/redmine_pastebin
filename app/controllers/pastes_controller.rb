@@ -35,9 +35,8 @@ class PastesController < ApplicationController
     @pastes_count = @pastes.count
     @pastes_pages = Paginator.new(self, @pastes_count, @limit, params[:page])
     @offset ||= @pastes_pages.current.offset
-    @pastes = @pastes.all(:order => "#{Paste.table_name}.created_on DESC",
-                          :offset => @offset,
-                          :limit => @limit)
+    @pastes = @pastes.order("#{Paste.table_name}.created_on DESC")
+                          .offset(@offset).limit(@limit)
 
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
