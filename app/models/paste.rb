@@ -50,7 +50,7 @@ class Paste < ActiveRecord::Base
   scope :visible, lambda{ |user=nil, options={}|
     user ||= User.current
 
-    s = where(Project.allowed_to_condition(user, :view_pastes, options)).includes(:project)
+    s = Paste.where(Project.allowed_to_condition(user, :view_pastes, options)).joins(:project)
     unless user.admin?
       s = s.where(["access_token IS NULL OR author_id = ?", user.id])
     end
@@ -83,7 +83,7 @@ class Paste < ActiveRecord::Base
       :id => o.to_param } }
 
   acts_as_activity_provider :scope => preload(:project, :author),
-    :author_key => :author_id
+     :author_key => :author_id
 
   def title
     t = super
