@@ -103,6 +103,7 @@ class Paste < ActiveRecord::Base
   SHORT_TEXT_LIMIT = 100
 
   def short_text
+    return "" if not text
     if text.length < SHORT_TEXT_LIMIT
       text
     else
