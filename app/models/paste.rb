@@ -30,10 +30,10 @@ class Paste < ActiveRecord::Base
     where({ :project_id => project })
   }
 
-  scope :secure, where("access_token IS NOT NULL")
+  scope :secure, -> { where("access_token IS NOT NULL") }
 
-  scope :expired, where("expires_at <= current_timestamp")
-  scope :unexpired, where("expires_at IS NULL OR expires_at > current_timestamp")
+  scope :expired, -> { where("expires_at <= current_timestamp") }
+  scope :unexpired, -> { where("expires_at IS NULL OR expires_at > current_timestamp") }
 
   #
   # * Restrict to projects where the user has a role allowing to view
@@ -50,7 +50,7 @@ class Paste < ActiveRecord::Base
   scope :visible, lambda{ |user=nil, options={}|
     user ||= User.current
 
-    s = where(Project.allowed_to_condition(user, :view_pastes, options)).includes(:project)
+    s = Paste.where(Project.allowed_to_condition(user, :view_pastes, options)).joins(:project)
     unless user.admin?
       s = s.where(["access_token IS NULL OR author_id = ?", user.id])
     end
@@ -72,24 +72,28 @@ class Paste < ActiveRecord::Base
   # conflict by overriding the user.
   #
   def self.visible_to(user, options={})
-    with_exclusive_scope do
-      Paste.visible(user, options)
-    end
+    Paste.visible(user, options).unscope(:where)
   end
 
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
-    :include => :project
+    :preload => :project
 
   acts_as_event :title => Proc.new{ |o| o.title },
     :url => Proc.new{ |o| { :controller => 'pastes', :action => 'show',
       :id => o.to_param } }
 
-  acts_as_activity_provider :find_options => {:include => [:project, :author]},
-    :author_key => :author_id
+  acts_as_activity_provider :scope => preload(:project, :author),
+     :author_key => :author_id
 
   def title
     t = super
-    t.present? ? t : "Paste ##{id}"
+    if t.present?
+      t
+    elsif not id.nil?
+      "Paste ##{id}"
+    else
+      ""
+    end
   end
 
   def description
@@ -99,6 +103,7 @@ class Paste < ActiveRecord::Base
   SHORT_TEXT_LIMIT = 100
 
   def short_text
+    return "" if not text
     if text.length < SHORT_TEXT_LIMIT
       text
     else
@@ -132,9 +137,7 @@ class Paste < ActiveRecord::Base
   end
 
   def self.find_by_secure_id(id)
-    with_exclusive_scope do
-      find_by_access_token(id)
-    end
+    where(:acces_token => id).unscope(:where)
   end
 
   def expired?
@@ -146,9 +149,7 @@ class Paste < ActiveRecord::Base
   end
 
   def self.wipe_all_expired
-    with_exclusive_scope do
-      Paste.expired.delete_all
-    end
+    Paste.expired.unscope(:where).delete_all
   end
 
   private

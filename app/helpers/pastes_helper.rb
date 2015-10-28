@@ -20,7 +20,9 @@ require 'coderay'
 
 module PastesHelper
   PASTEBIN_LANGS = ["Plain Text", "C", "C++", "Java", "JavaScript",
-                    "Python", "Ruby", "PHP", "SQL", "XML", "Diff"]
+                    "Python", "Ruby", "PHP", "SQL", "XML", "Diff",
+                    "Clojure", "CSS", "HAML", "HTML", "JSON", "YAML",
+                    "Bash"]
 
   # This maps pretty language/syntax name to identifier that CodeRay
   # can understand.  If a language is not mapped, unchanged name is
@@ -57,7 +59,7 @@ module PastesHelper
   end
 
   def pastebin_language_choices
-    PASTEBIN_LANGS.map { |v| [v, pastebin_lang_to_scanner(v)] }
+    PASTEBIN_LANGS.sort.map { |v| [v, pastebin_lang_to_scanner(v)] }
   end
 
   def pastebin_expiration_choices

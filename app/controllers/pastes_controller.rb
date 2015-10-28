@@ -27,15 +27,16 @@ class PastesController < ApplicationController
 
   accept_rss_auth :index
 
+  accept_api_auth :create
+
   def index
     @limit = per_page_option
 
     @pastes_count = @pastes.count
     @pastes_pages = Paginator.new(self, @pastes_count, @limit, params[:page])
     @offset ||= @pastes_pages.current.offset
-    @pastes = @pastes.all(:order => "#{Paste.table_name}.created_on DESC",
-                          :offset => @offset,
-                          :limit => @limit)
+    @pastes = @pastes.order("#{Paste.table_name}.created_on DESC")
+                          .offset(@offset).limit(@limit)
 
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
@@ -77,6 +78,8 @@ class PastesController < ApplicationController
       create
     else
       if @paste.update_attributes(params[:paste])
+        expire_fragment("paste-short-#{@paste.id}-#{User.current.language}")
+        expire_fragment("paste-#{@paste.id}-#{User.current.language}")
         flash[:notice] = l(:notice_paste_updated)
         redirect_to @paste
       else
