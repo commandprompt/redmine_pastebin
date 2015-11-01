@@ -19,21 +19,19 @@
 require "digest/sha1"
 
 class Paste < ActiveRecord::Base
-  unloadable # really?
-
   attr_accessible :title, :lang, :text
 
   belongs_to :project
   belongs_to :author, :class_name => 'User'
 
-  scope :for_project, lambda { |project|
+  scope :for_project, lambda{ |project|
     where({ :project_id => project })
   }
 
-  scope :secure, where("access_token IS NOT NULL")
+  scope :secure, lambda{ where("access_token IS NOT NULL") }
 
-  scope :expired, where("expires_at <= current_timestamp")
-  scope :unexpired, where("expires_at IS NULL OR expires_at > current_timestamp")
+  scope :expired, lambda{ where("expires_at <= current_timestamp") }
+  scope :unexpired, lambda{ where("expires_at IS NULL OR expires_at > current_timestamp") }
 
   #
   # * Restrict to projects where the user has a role allowing to view
@@ -50,42 +48,20 @@ class Paste < ActiveRecord::Base
   scope :visible, lambda{ |user=nil, options={}|
     user ||= User.current
 
-    s = where(Project.allowed_to_condition(user, :view_pastes, options)).includes(:project)
+    s = where(Project.allowed_to_condition(user, :view_pastes, options)).joins(:project)
     unless user.admin?
       s = s.where(["access_token IS NULL OR author_id = ?", user.id])
     end
     s.unexpired
   }
 
-  #
-  # The default scope limits what's exposed by event providers below.
-  #
-  # The use of block is important so that current user is evaluated
-  # every time inside the visible scope as opposed to being captured
-  # at the time of Paste class load.
-  #
-  default_scope { visible }
-
-  #
-  # We need to use exclusive scope to be able to specify a user other
-  # than the current one.  Otherwise the default scope will be in
-  # conflict by overriding the user.
-  #
-  def self.visible_to(user, options={})
-    with_exclusive_scope do
-      Paste.visible(user, options)
-    end
-  end
-
-  acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
-    :include => :project
+  acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"]
 
   acts_as_event :title => Proc.new{ |o| o.title },
     :url => Proc.new{ |o| { :controller => 'pastes', :action => 'show',
       :id => o.to_param } }
 
-  acts_as_activity_provider :find_options => {:include => [:project, :author]},
-    :author_key => :author_id
+  acts_as_activity_provider :author_key => :author_id
 
   def title
     t = super
@@ -132,9 +108,7 @@ class Paste < ActiveRecord::Base
   end
 
   def self.find_by_secure_id(id)
-    with_exclusive_scope do
-      find_by_access_token(id)
-    end
+    find_by_access_token(id)
   end
 
   def expired?
@@ -146,9 +120,7 @@ class Paste < ActiveRecord::Base
   end
 
   def self.wipe_all_expired
-    with_exclusive_scope do
-      Paste.expired.delete_all
-    end
+    Paste.expired.delete_all
   end
 
   private
