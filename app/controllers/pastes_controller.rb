@@ -17,8 +17,6 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 class PastesController < ApplicationController
-  unloadable
-
   include PastesHelper
 
   default_search_scope :pastes
@@ -31,11 +29,11 @@ class PastesController < ApplicationController
     @limit = per_page_option
 
     @pastes_count = @pastes.count
-    @pastes_pages = Paginator.new(self, @pastes_count, @limit, params[:page])
-    @offset ||= @pastes_pages.current.offset
-    @pastes = @pastes.all(:order => "#{Paste.table_name}.created_on DESC",
-                          :offset => @offset,
-                          :limit => @limit)
+    @pastes_pages = Paginator.new(@pastes_count, @limit, params[:page])
+    @offset ||= @pastes_pages.offset
+    @pastes = @pastes.order("#{Paste.table_name}.created_on DESC").
+              offset(@offset).
+              limit(@limit)
 
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
@@ -95,7 +93,7 @@ class PastesController < ApplicationController
 
   def find_paste_and_project
     @project = Project.find(params[:project_id]) if params[:project_id].present?
-    @pastes = Paste.visible_to(User.current, :project => @project)
+    @pastes = Paste.visible(User.current, :project => @project)
 
     if params[:id].present?
       if Paste.secure_id?(params[:id])

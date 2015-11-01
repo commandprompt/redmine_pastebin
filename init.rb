@@ -16,17 +16,15 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'redmine'
-
 Redmine::Plugin.register :redmine_pastebin do
   name 'Redmine Pastebin plugin'
-  author 'Alex Shulgin <ash@commandprompt.com>'
+  author 'Alex Shulgin <alex.shulgin@gmail.com>'
   description 'A real pastebin plugin for redmine'
-  version '0.2.0'
+  version '0.3.0'
   url 'https://github.com/commandprompt/redmine_pastebin/'
 #  author_url 'http://example.com/about'
 
-  requires_redmine :version_or_higher => '2.0.x'
+  requires_redmine '3.0.0'
 
   project_module :pastes do
     permission :view_pastes,   :pastes => [:index, :show, :download]
@@ -59,15 +57,7 @@ Redmine::WikiFormatting::Macros.register do
   end
 end
 
-prepare_block = Proc.new do
+Rails.application.config.after_initialize do
   Project.send(:include, RedminePastebin::ProjectPastesPatch)
   User.send(:include, RedminePastebin::UserPastesPatch)
 end
-
-if Rails.env.development?
-  ActionDispatch::Reloader.to_prepare { prepare_block.call }
-else
-  prepare_block.call
-end
-
-require_dependency 'redmine_pastebin/view_hooks'
