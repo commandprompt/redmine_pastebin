@@ -16,38 +16,77 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'coderay'
-
 module PastesHelper
-  PASTEBIN_LANGS = ["Plain Text", "C", "C++", "Java", "JavaScript",
-                    "Python", "Ruby", "PHP", "SQL", "XML", "Diff"]
+  PASTEBIN_LANGS = ['Plain Text', 'Markup', 'CSS', 'Apache Config', 'Bash',
+                    'CoffeeScript','Git', 'Go','HAML', 'JSON', 'Markdown',
+                    'Nginx', 'Perl', 'C', 'C++', 'Java', 'JavaScript',
+                    'Python', 'Ruby', 'PHP', 'SQL', 'XML', 'Diff', 'YAML']
 
-  # This maps pretty language/syntax name to identifier that CodeRay
+  # This maps pretty language/syntax name to identifier that PrismJS
   # can understand.  If a language is not mapped, unchanged name is
   # assumed for the scanner.
   PASTEBIN_SCANNERS_MAP = {
-    "Plain Text" => "Plaintext",
-    "C++" => "CPlusPlus"
+    'Plain Text' => 'Plaintext',
+    'Markup' => 'markup',
+    'CSS' => 'css',
+    'Apache Config' => 'apacheconf',
+    'Bash' => 'coffeescript',
+    'CoffeeScript' => 'coffeescript',
+    'Git' => 'git',
+    'Go' => 'go',
+    'HAML' => 'haml',
+    'JSON' => 'json',
+    'Markdown' => 'markdown',
+    'Nginx' => 'nginx',
+    'Perl' => 'perl',
+    'C' => 'c',
+    'Java' => 'java',
+    'JavaScript' => 'javascript',
+    'Python' => 'python',
+    'Ruby' => 'ruby',
+    'PHP' => 'php',
+    'SQL' => 'sql',
+    'XML' => 'xml',
+    'Diff' => 'diff',
+    'YAML' => 'yaml',
+    'C++' => 'cpp'
   }
 
   PASTEBIN_MIME_TYPES_MAP = {
-    "Plain Text" => "text/plain",
-    "C" => "text/x-c",
-    "Ruby" => "text/x-ruby",
-    "PHP" => "text/x-php",
-    "XML" => "application/xml"
+    'Plain Text' => 'text/plain',
+    'C' => 'text/x-c',
+    'Ruby' => 'text/x-ruby',
+    'PHP' => 'text/x-php',
+    'XML' => 'application/xml',
+    'python' => 'text/x-python',
+    'markdown' => 'text/x-markdown',
+    'bash' => 'text/x-shellscript',
+    'coffeescript' => 'application/vnd.coffeescript'
   }
 
   PASTEBIN_FILE_SUFFIX_MAP = {
-    "Plain Text" => "txt",
-    "C++" => "cpp",
-    "JavaScript" => "js",
-    "Python" => "py",
-    "Ruby" => "rb",
+    'Plain Text' => 'txt',
+    'Plaintext' => 'txt',
+    'git' => 'txt',
+    'markup' => 'txt',
+    'C++' => 'cpp',
+    'JavaScript' => 'js',
+    'Python' => 'py',
+    'Ruby' => 'rb',
+    'ruby' => 'rb',
+    'python' => 'py',
+    'coffeescript' => 'coffee',
+    'bash' => 'sh',
+    'markdown' => 'md',
+    'perl' => 'pl',
+    'javascript' => 'js',
+    'nginx' => 'conf',
+    'apacheconf' => 'conf'
+
   }
 
   PASTEBIN_EXPIRATION_CHOICES = [[:never, 0], [:an_hour, 1.hour], [:a_day, 1.day]]
-  
+
   def pastebin_lang_to_scanner(lang)
     PASTEBIN_SCANNERS_MAP[lang] || lang
   end
@@ -77,11 +116,10 @@ module PastesHelper
   end
 
   def highlighted_content_for_paste(paste)
-    #Redmine::SyntaxHighlighting.highlight_by_language(paste.text, paste.lang)
-
-    # TODO: hard-coding code-ray for :table option
-    content_tag :div, :class => "syntaxhl box" do
-      ::CodeRay.scan(paste.text, paste.lang).html(:line_numbers => :table).html_safe
+    content_tag :pre do
+      content_tag :code, :class => "language-#{pastebin_lang_to_scanner(paste.lang)} line-numbers" do
+        paste.text
+      end
     end
   end
 

@@ -1,16 +1,7 @@
 <% content_for :header_tags do %>
 <%= stylesheet_link_tag 'scm' %>
-
-<style type="text/css">
-/* This fixes the diff pastes display. */
-div.paste .syntaxhl div {
-  display: block;
-}
-
-table.CodeRay td.line_numbers {
-  text-align: right;
-}
-</style>
+<%= stylesheet_link_tag 'prism', :plugin => "redmine_pastebin" %>
+<%= javascript_include_tag 'prism', :plugin => "redmine_pastebin" %>
 <% end %>
 
 <% html_title @paste.title %>
