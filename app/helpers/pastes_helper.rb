@@ -17,10 +17,9 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 module PastesHelper
-  PASTEBIN_LANGS = ['Plain Text', 'Markup', 'CSS', 'Apache Config', 'Bash',
-                    'CoffeeScript','Git', 'Go','HAML', 'JSON', 'Markdown',
-                    'Nginx', 'Perl', 'C', 'C++', 'Java', 'JavaScript',
-                    'Python', 'Ruby', 'PHP', 'SQL', 'XML', 'Diff', 'YAML']
+  PASTEBIN_LANGS =  ["Plain Text", "Apache Config", "Bash", "C", "C++", "CSS", "CoffeeScript",
+                     "Diff", "Git","Go","HAML", "JSON", "Java", "JavaScript", "Markdown",
+                     "Markup", "Nginx","PHP", "Perl", "Python", "Ruby", "SQL", "XML", "YAML"]
 
   # This maps pretty language/syntax name to identifier that PrismJS
   # can understand.  If a language is not mapped, unchanged name is
