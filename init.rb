@@ -22,9 +22,9 @@ Redmine::Plugin.register :redmine_pastebin do
   name 'Redmine Pastebin plugin'
   author 'Eugene Dubinin <eugend@commandprompt.com>'
   description 'Redmine pastebin plugin, original work by Alexander Shulgin'
-  version '0.3.0'
-  url 'https://github.com/eug3nix/redmine_pastebin.git'
-#  author_url 'http://example.com/about'
+  version '0.3.1'
+  url 'https://github.com/commandprompt/redmine_pastebin.git'
+  author_url 'http://commandprompt.com/about'
 
   requires_redmine :version_or_higher => '2.0.x'
 

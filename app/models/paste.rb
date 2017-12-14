@@ -26,14 +26,21 @@ class Paste < ActiveRecord::Base
   belongs_to :project
   belongs_to :author, :class_name => 'User'
 
-  scope :for_project, lambda { |project|
+  scope :for_project, -> (project) {
     where({ :project_id => project })
   }
 
-  scope :secure, where("access_token IS NOT NULL")
+  scope :secure, -> {
+    where("access_token IS NOT NULL")
+  }
 
-  scope :expired, where("expires_at <= current_timestamp")
-  scope :unexpired, where("expires_at IS NULL OR expires_at > current_timestamp")
+  scope :expired, -> {
+    where("expires_at <= current_timestamp")
+  }
+
+  scope :unexpired, -> {
+    where("expires_at IS NULL OR expires_at > current_timestamp")
+  }
 
   #
   # * Restrict to projects where the user has a role allowing to view
@@ -47,10 +54,10 @@ class Paste < ActiveRecord::Base
   #
   # * Never show expired pastes even to an admin.
   #
-  scope :visible, lambda{ |user=nil, options={}|
+  scope :visible, -> (user=nil, options={}) {
     user ||= User.current
 
-    s = where(Project.allowed_to_condition(user, :view_pastes, options)).includes(:project)
+    s = where(Project.allowed_to_condition(user, :view_pastes, options)).joins(:project)
     unless user.admin?
       s = s.where(["access_token IS NULL OR author_id = ?", user.id])
     end
@@ -72,22 +79,23 @@ class Paste < ActiveRecord::Base
   # conflict by overriding the user.
   #
   def self.visible_to(user, options={})
-    with_exclusive_scope do
+    unscoped do
       Paste.visible(user, options)
     end
   end
 
   acts_as_searchable :columns => ["#{table_name}.title", "#{table_name}.text"],
-    :include => :project
+    :scope => preload(:project)
 
   acts_as_event :title => Proc.new{ |o| o.title },
     :url => Proc.new{ |o| { :controller => 'pastes', :action => 'show',
       :id => o.to_param } }
 
-  acts_as_activity_provider :find_options => {:include => [:project, :author]},
+  acts_as_activity_provider :scope => preload([:project, :author]),
     :author_key => :author_id
 
   def title
+    return if new_record?
     t = super
     t.present? ? t : "Paste ##{id}"
   end
@@ -132,7 +140,7 @@ class Paste < ActiveRecord::Base
   end
 
   def self.find_by_secure_id(id)
-    with_exclusive_scope do
+    unscoped do
       find_by_access_token(id)
     end
   end
@@ -146,7 +154,7 @@ class Paste < ActiveRecord::Base
   end
 
   def self.wipe_all_expired
-    with_exclusive_scope do
+    unscoped do
       Paste.expired.delete_all
     end
   end
