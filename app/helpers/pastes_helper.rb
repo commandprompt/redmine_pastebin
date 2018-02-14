@@ -146,7 +146,7 @@ module PastesHelper
     link_to_if_authorized(title, url_to_paste("destroy", paste),
                           :class => "icon icon-del",
                           :method => :delete,
-                          :confirm => l(:text_paste_delete_confirmation))
+                          data: {confirm: l(:text_paste_delete_confirmation)})
   end
 
   def download_paste_link(paste, title = l(:button_download))
