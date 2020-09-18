@@ -23,7 +23,7 @@ class PastesController < ApplicationController
 
   default_search_scope :pastes
 
-  before_filter :find_paste_and_project, :authorize
+  before_action :find_paste_and_project, :authorize
 
   accept_rss_auth :index
 
@@ -58,7 +58,7 @@ class PastesController < ApplicationController
   end
 
   def create
-    @paste = @project.pastes.build(params[:paste])
+    @paste = @project.pastes.build(paste_params)
     @paste.author = User.current
     @paste.secure = (params[:paste][:secure] == "1")
     @paste.expire_in(params[:paste][:expires].to_i) if params[:paste][:expires].to_i > 0
@@ -74,7 +74,7 @@ class PastesController < ApplicationController
     if params[:fork].present?
       create
     else
-      if @paste.update_attributes(params[:paste])
+      if @paste.update_attributes(paste_params)
         flash[:notice] = l(:notice_paste_updated)
         redirect_to @paste
       else
@@ -90,6 +90,10 @@ class PastesController < ApplicationController
   end
 
   private
+
+  def paste_params
+    params.require(:paste).permit(:title, :lang, :text)
+  end
 
   def find_paste_and_project
     @project = Project.find(params[:project_id]) if params[:project_id].present?

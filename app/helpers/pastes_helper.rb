@@ -29,7 +29,7 @@ module PastesHelper
     'Markup' => 'markup',
     'CSS' => 'css',
     'Apache Config' => 'apacheconf',
-    'Bash' => 'coffeescript',
+    'Bash' => 'bash',
     'CoffeeScript' => 'coffeescript',
     'Git' => 'git',
     'Go' => 'go',

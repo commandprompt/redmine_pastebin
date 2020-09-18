@@ -22,11 +22,11 @@ Redmine::Plugin.register :redmine_pastebin do
   name 'Redmine Pastebin plugin'
   author 'Eugene Dubinin <eugend@commandprompt.com>'
   description 'Redmine pastebin plugin, original work by Alexander Shulgin'
-  version '0.3.1'
+  version '0.3.2'
   url 'https://github.com/commandprompt/redmine_pastebin.git'
   author_url 'http://commandprompt.com/about'
 
-  requires_redmine :version_or_higher => '2.0.x'
+  requires_redmine :version_or_higher => '4.0.x'
 
   project_module :pastes do
     permission :view_pastes,   :pastes => [:index, :show, :download]
@@ -65,7 +65,7 @@ prepare_block = Proc.new do
 end
 
 if Rails.env.development?
-  ActionDispatch::Reloader.to_prepare { prepare_block.call }
+  ((Rails.version > "5")? ActiveSupport::Reloader : ActionDispatch::Callbacks).to_prepare { prepare_block.call }
 else
   prepare_block.call
 end
