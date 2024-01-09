@@ -22,5 +22,5 @@
 <%= l(:text_paste_update_or_make_new,
       :update => f.submit(l(:button_paste_update)),
       :make_new => submit_tag(l(:button_paste_make_new),
-                              :onclick => "$('fork').value = 'yes'")).html_safe %>
+                              :onclick => "$('#fork').val('yes')")).html_safe %>
 <% end %>

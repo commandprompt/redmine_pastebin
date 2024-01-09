@@ -25,7 +25,7 @@ class PastesController < ApplicationController
 
   before_action :find_paste_and_project, :authorize
 
-  accept_rss_auth :index
+  accept_atom_auth :index
 
   def index
     @limit = per_page_option
@@ -74,7 +74,7 @@ class PastesController < ApplicationController
     if params[:fork].present?
       create
     else
-      if @paste.update_attributes(paste_params)
+      if @paste.update(paste_params)
         flash[:notice] = l(:notice_paste_updated)
         redirect_to @paste
       else

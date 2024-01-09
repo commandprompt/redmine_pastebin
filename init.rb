@@ -22,11 +22,11 @@ Redmine::Plugin.register :redmine_pastebin do
   name 'Redmine Pastebin plugin'
   author 'Eugene Dubinin <eugend@commandprompt.com>'
   description 'Redmine pastebin plugin, original work by Alexander Shulgin'
-  version '0.3.2'
+  version '0.3.3'
   url 'https://github.com/commandprompt/redmine_pastebin.git'
   author_url 'http://commandprompt.com/about'
 
-  requires_redmine :version_or_higher => '4.0.x'
+  requires_redmine :version_or_higher => '5.0'
 
   project_module :pastes do
     permission :view_pastes,   :pastes => [:index, :show, :download]
@@ -59,15 +59,6 @@ Redmine::WikiFormatting::Macros.register do
   end
 end
 
-prepare_block = Proc.new do
-  Project.send(:include, RedminePastebin::ProjectPastesPatch)
-  User.send(:include, RedminePastebin::UserPastesPatch)
-end
+Project.send(:include, RedminePastebin::ProjectPastesPatch)
+User.send(:include, RedminePastebin::UserPastesPatch)
 
-if Rails.env.development?
-  ((Rails.version > "5")? ActiveSupport::Reloader : ActionDispatch::Callbacks).to_prepare { prepare_block.call }
-else
-  prepare_block.call
-end
-
-require_dependency 'redmine_pastebin/view_hooks'
